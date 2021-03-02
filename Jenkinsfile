@@ -8,9 +8,7 @@ pipeline {
   	stages {
 		stage('Clone ndk repo') {
 			 steps {
-               			 script {
-					//checkout ndk and bsp
-					dir("ndk_plus_bsp_code") {
+				 script {
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                     					sh '''
@@ -19,7 +17,6 @@ pipeline {
 								git clone git@github.com:BuddyTV/ndk
 							'''
 						}
-					}
 				 }
 			 }
 		 }
@@ -29,7 +26,7 @@ pipeline {
 				sh'''
 				set -x
 				rm -rf *
-				tar -czvf ndk_zip.tar.gz ndk_plus_bsp_code
+				tar -czvf ndk_zip.tar.gz ndk_plus_bsp/ndk
 				'''
 			}
 		}
