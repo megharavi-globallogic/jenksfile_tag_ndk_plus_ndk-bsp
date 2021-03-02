@@ -20,30 +20,6 @@ pipeline {
 				 }
 			 }
 		 }
-		stage('create tar.gz files'){
-			steps{
-				sh'''
-				set -x
-				rm -rf *.tar.gz
-				tar -czvf ndk_zip.tar.gz ndk
-				'''
-			}
-		}
-		
-		
-		stage("download tagged code to workspace"){
-				steps {
-					dir("tag_${GIT_TAG}"){
-					sh '''
-					git checkout ${GIT_TAG}
-					tar -czvf ${GIT_TAG}.tar.gz tag_${GIT_TAG}
-					rm -rf tag_${GIT_TAG} tag_${GIT_TAG}@tmp
-					
-					'''
-					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
-					}
-				}
-		}
 		
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
