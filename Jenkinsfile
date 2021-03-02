@@ -25,7 +25,7 @@ pipeline {
 				sh'''
 				set -x
 				rm -rf *.tar.gz
-				tar -czvf ndk_zip.tar.gz ndk
+				tar -czvf ndk.tar.gz ndk
 				'''
 			}
 		}
