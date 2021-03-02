@@ -40,7 +40,7 @@ pipeline {
                        		  """{
                            		"files": [
                               		 {
-                               		   "pattern": "/ndk_plus_bsp/*tar.zip",
+                               		   "pattern": "/ndk_plus_bsp/*tar.gz",
                                		   "target": "vizio-dallas-megha-test/"           								  
                               		 }
                            		 ]
