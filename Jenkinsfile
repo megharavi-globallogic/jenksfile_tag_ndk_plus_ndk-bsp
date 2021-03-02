@@ -35,23 +35,25 @@ pipeline {
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
                 	rtUpload (
-                   		serverId: 'artifactory',
-                   		spec:
-                       		  """{
-                           		"files": [
-                              		 {
+                   	serverId: 'artifactory',
+                   	spec:
+                       	     """{
+                           	"files": [
+                              	 	{
                                		   "pattern": "/ndk_plus_bsp/ndk_zip.tar.gz",
                                		   "target": "vizio-dallas-megha-test/"           								  
-                              		 }
+                              		}
                            		 ]
                        		  }"""
               		)
+			sh 'rm -rf *.tar.gz'
            	}
 		}
 		
 		stage("download tagged code to workspace"){
 				steps {
-					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
+					sh 'git checkout ${GIT_TAG}'
+					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
 				}
 		}
 	}
