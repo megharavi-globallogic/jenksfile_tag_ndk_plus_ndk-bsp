@@ -52,9 +52,10 @@ pipeline {
 		
 		stage("download tagged code to workspace"){
 				steps {
-					dir("tag_code")
+					dir("${GIT_TAG}_code"){
 					sh 'git checkout ${GIT_TAG}'
 					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
+					}
 				}
 		}
 	}
