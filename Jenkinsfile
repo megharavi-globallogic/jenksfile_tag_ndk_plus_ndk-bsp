@@ -32,7 +32,9 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
+					mkdir test
 					mkdir  ${GIT_TAG}
+	
 					cd ${GIT_TAG}
 					git checkout ${GIT_TAG}
 					
