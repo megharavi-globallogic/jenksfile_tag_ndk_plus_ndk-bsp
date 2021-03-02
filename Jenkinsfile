@@ -28,7 +28,7 @@ pipeline {
 			steps{
 				sh'''
 				set -x
-				rm -rf*
+				rm -rf *
 				tar -czvf ndk_zip.tar.gz ndk_plus_bsp_code
 				'''
 			}
