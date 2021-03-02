@@ -25,7 +25,8 @@ pipeline {
 			steps{
 				sh'''
 				set -x
-				tar -czvf ndk_zip.tar.gz ndk_plus_bsp/ndk
+				rm -rf *.tar.gz
+				tar -czvf ndk_zip.tar.gz ndk
 				'''
 			}
 		}
