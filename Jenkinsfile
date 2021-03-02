@@ -26,14 +26,12 @@ pipeline {
 			 }
 		 }
 		
-		stage {
-			steps("download tagged code to workspace"){
+		stage("download tagged code to workspace"){
 				steps {
 					dir("ndk_code") {
 					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: src, credentialsId: 'git-ndk' ]], branches: [[name: '${git_tag_name}']]]
 					}
 				}
-			}
 		}
 		
 		stage('Uploading ndk & bsp to artifactory') {
