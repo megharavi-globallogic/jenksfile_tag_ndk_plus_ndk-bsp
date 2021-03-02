@@ -20,6 +20,15 @@ pipeline {
 				 }
 			 }
 		 }
+		stage('create tar.gz files'){
+			steps{
+				sh'''
+				set -x
+				rm -rf *.tar.gz
+				tar -czvf ndk_zip.tar.gz ndk
+				'''
+			}
+		}
 		
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
