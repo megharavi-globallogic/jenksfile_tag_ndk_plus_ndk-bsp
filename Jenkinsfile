@@ -26,6 +26,16 @@ pipeline {
 			 }
 		 }
 		
+		stage {
+			steps("download tagged code to workspace"){
+				steps {
+					dir("ndk_code") {
+					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: git@github.com:BuddyTV/ndk, credentialsId: 'git-ndk' ]], branches: [[name: 'refs/tags/${git_tag_name}']]]
+					}
+				}
+			}
+		}
+		
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
                 	rtUpload (
