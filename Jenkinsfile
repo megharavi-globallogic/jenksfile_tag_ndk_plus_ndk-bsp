@@ -31,11 +31,6 @@ pipeline {
 			}
 		}
 		
-		stage("download tagged code to workspace"){
-				steps {
-					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
-				}
-		}
 			
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
@@ -45,13 +40,19 @@ pipeline {
                        		  """{
                            		"files": [
                               		 {
-                               		   "pattern": "${GIT_TAG}.zip",
+                               		   "pattern": "/ndk_plus_bsp/*tar.zip",
                                		   "target": "vizio-dallas-megha-test/"           								  
                               		 }
                            		 ]
                        		  }"""
               		)
            	}
-		}		
+		}
+		
+		stage("download tagged code to workspace"){
+				steps {
+					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
+				}
+		}
 	}
 }
