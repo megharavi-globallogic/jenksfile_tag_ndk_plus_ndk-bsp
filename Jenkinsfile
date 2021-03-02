@@ -31,8 +31,9 @@ pipeline {
 		}
 		stage("download tagged code to workspace"){
 				steps {
-					dir("tag_${GIT_TAG}"){
+					dir("${GIT_TAG}"){
 					sh '''
+					cd tag_${GIT_TAG}
 					git checkout ${GIT_TAG}
 					
 					'''
