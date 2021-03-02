@@ -20,7 +20,6 @@ pipeline {
 				 }
 			 }
 		 }
-		
 		stage('create tar.gz files'){
 			steps{
 				sh'''
@@ -30,6 +29,7 @@ pipeline {
 				'''
 			}
 		}
+		
 		
 		stage("download tagged code to workspace"){
 				steps {
