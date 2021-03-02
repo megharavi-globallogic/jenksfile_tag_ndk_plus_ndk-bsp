@@ -7,6 +7,25 @@ pipeline {
 	
 	}
   	stages {
+		stage('Clone ndk repo') {
+			 steps {
+               			 script {
+					//checkout ndk and bsp
+					dir("ndk_tags_code") {
+						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
+						{
+                    					sh '''
+								set -x
+								rm -rf *
+								git clone git@github.com:BuddyTV/ndk
+							'''
+						}
+					}
+					
+				 }
+			 }
+		 }
+		
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
                 	rtUpload (
@@ -25,16 +44,6 @@ pipeline {
 		}
 		
 		
-		 stage('Checkout ndk & bsp tags from git') {
-			 steps {
-               			 script {
-					//checkout ndk and bsp
-					dir("ndk_tags") {
-						sh 'git checkout ${git_tag_name}'
-					}
-					
-				 }
-			 }
-		 }		
+		 		
 	}
 }
