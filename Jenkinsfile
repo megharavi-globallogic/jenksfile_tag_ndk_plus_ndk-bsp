@@ -29,7 +29,7 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					dir("ndk_code") {
-					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: src, credentialsId: 'git-ndk' ]], branches: [[name: '${git_tag_name}']]]
+					checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${git_tag_name}']]]
 					}
 				}
 		}
