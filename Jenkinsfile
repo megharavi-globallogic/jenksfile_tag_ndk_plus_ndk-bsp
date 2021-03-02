@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "4.0.431.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)"
+	GIT_TAG = "test"
 	}
 	
   	stages {
@@ -32,7 +32,7 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
-					mkdir test
+	
 					mkdir  ${GIT_TAG}
 	
 					cd ${GIT_TAG}
