@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "4.0.435.0"
+	GIT_TAG = 4.0.435.0
 	//VERSION = ""
 	}
 	
