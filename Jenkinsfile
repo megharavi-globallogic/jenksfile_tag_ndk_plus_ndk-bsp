@@ -20,15 +20,6 @@ pipeline {
 				 }
 			 }
 		 }
-		stage('create tar.gz files'){
-			steps{
-				sh'''
-				set -x
-				rm -rf *.tar.gz
-				tar -czvf ndk.tar.gz ndk
-				'''
-			}
-		}
 		
 		stage("download tagged code to workspace"){
 				steps {
