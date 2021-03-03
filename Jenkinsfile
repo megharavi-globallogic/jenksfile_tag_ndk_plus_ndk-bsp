@@ -27,9 +27,11 @@ pipeline {
 					rm -rf tag
 					mkdir tag
 					git checkout ${GIT_TAG}
-					mv !(ndk) tag
+					sudo rm -rf ndk
+					
 					
 					'''
+					//mv !(ndk) tag
 					//cd ..
 					//tar -czvf ${GIT_TAG}.tar.gz tag
 	//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
