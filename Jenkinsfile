@@ -26,7 +26,7 @@ pipeline {
 					sh '''
 					rm -rf tag
 					mkdir tag
-					cd getwd()/tag
+					cd $PWD/tag
 					git checkout ${GIT_TAG}
 					
 					'''
