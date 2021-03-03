@@ -24,14 +24,17 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
-					mkdir tag
-					cd tag
+					
 					git checkout ${GIT_TAG}
-					cd ..
-					tar -czvf ${GIT_TAG}.tar.gz tag
+					
 					
 					
 					'''
+					//mkdir tag
+					//cd tag
+					//git checkout ${GIT_TAG}
+					//cd ..
+					//tar -czvf ${GIT_TAG}.tar.gz tag
 	//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
 					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
 
