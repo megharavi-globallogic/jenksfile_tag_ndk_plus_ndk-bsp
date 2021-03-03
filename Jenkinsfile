@@ -2,8 +2,8 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = '4.0.435.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)'
-	//VERSION = ""
+	GIT_TAG = '4.0.432.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)'
+	//VERSION = "" '4.0.435.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)' 
 	}
 	
   	stages {
