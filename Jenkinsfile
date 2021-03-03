@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	GIT_TAG = "4.0.435.0"
-	VERSION = ""
+	//VERSION = ""
 	}
 	
   	stages {
@@ -25,6 +25,7 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
+					echo "${GIT_TAG}"
 					git checkout ${GIT_TAG}
 					sudo rm -rf ndk
 					cd ..
