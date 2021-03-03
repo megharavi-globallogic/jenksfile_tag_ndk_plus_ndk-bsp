@@ -27,9 +27,11 @@ pipeline {
 					git checkout ${GIT_TAG}
 					sudo rm -rf ndk
 					cd ..
-					tar -czvf ${GIT_TAG}.tar.gz ndk_plus_bsp
-					mv ${GIT_TAG}.tar.gz ndk_plus_bsp
+					tar -czvf tag.tar.gz ndk_plus_bsp
+					
 					'''
+					//mv tag.tar.gz ndk_plus_bsp
+					//mv tag.tar.gz ${GIT_TAG}.tar.gz
 					//mv !(ndk) tag
 					//cd ..
 					//tar -czvf ${GIT_TAG}.tar.gz tag
