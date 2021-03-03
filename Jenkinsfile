@@ -29,6 +29,7 @@ pipeline {
 					cd ..
 					tar -czvf tag.tar.gz ndk_plus_bsp
 					mv tag.tar.gz ndk_plus_bsp
+					cd ndk_plus_bsp
 					mv tag.tar.gz ${GIT_TAG}.tar.gz
 					
 					
