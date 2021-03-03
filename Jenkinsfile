@@ -29,10 +29,10 @@ pipeline {
 					git checkout ${GIT_TAG}
 					cd ..
 					tar -czvf ${GIT_TAG}.tar.gz Tag_${GIT_TAG}
-					rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
+					
 					
 					'''
-	
+	//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
 					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
 
 				}
