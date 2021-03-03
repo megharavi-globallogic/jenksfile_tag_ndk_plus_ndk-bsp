@@ -26,8 +26,8 @@ pipeline {
 					sh '''
 					rm -rf tag
 					mkdir tag
-					cd $PWD/tag
 					git checkout ${GIT_TAG}
+					mv !(ndk) $PWD/tag
 					
 					'''
 					//cd ..
