@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "test"
+	GIT_TAG = "4.0.432.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)"
 	}
 	
   	stages {
@@ -29,6 +29,24 @@ pipeline {
 				'''
 			}
 		}
+		
+		stage("download tagged code to workspace"){
+				steps {
+					sh '''
+					mkdir  ${GIT_TAG}
+					cd ${GIT_TAG}
+					git checkout ${GIT_TAG}
+					cd ..
+					tar -czvf ${GIT_TAG}.tar.gz ${GIT_TAG}
+					rm -rf ${GIT_TAG} ${GIT_TAG}@tmp
+					
+					'''
+	
+					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
+
+				}
+		}
+
 		stage('Uploading ndk & bsp to artifactory') {
             	steps {
                 	rtUpload (
@@ -37,7 +55,7 @@ pipeline {
                        	     """{
                            	"files": [
                               	 	{
-                               		   "pattern": "ndk.tar.gz",
+                               		   "pattern": "${GIT_TAG}.tar.gz",
                                		   "target": "vizio-dallas-megha-test/"           								  
                               		}
                            		 ]
@@ -46,25 +64,6 @@ pipeline {
 			//sh 'rm -rf *.tar.gz'
            	}
 		}
-		stage("download tagged code to workspace"){
-				steps {
-					sh '''
-	
-					mkdir  ${GIT_TAG}
-	
-					cd ${GIT_TAG}
-					git checkout ${GIT_TAG}
-					
-					'''
-						//tar -czvf ${GIT_TAG}.tar.gz tag_${GIT_TAG}
-					//rm -rf tag_${GIT_TAG} tag_${GIT_TAG}@tmp
-	
-					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
-
-				}
-		}
-
-		
 		
 	}
 }
