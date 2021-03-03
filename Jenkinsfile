@@ -28,7 +28,9 @@ pipeline {
 					sudo rm -rf ndk
 					cd ..
 					tar -czvf ${GIT_TAG}.tar.gz ndk_plus_bsp
+					cd ndk_plus_bsp
 					sudo rm -rf *
+					cd ..
 					mv ${GIT_TAG}.tar.gz ndk_plus_bsp
 					
 					'''
