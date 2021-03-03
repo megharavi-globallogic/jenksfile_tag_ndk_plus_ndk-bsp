@@ -24,11 +24,11 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
-					mkdir  Tag_${GIT_TAG}
-					cd Tag_${GIT_TAG}
+					mkdir tag
+					cd tag
 					git checkout ${GIT_TAG}
 					cd ..
-					tar -czvf ${GIT_TAG}.tar.gz Tag_${GIT_TAG}
+					tar -czvf ${GIT_TAG}.tar.gz tag
 					
 					
 					'''
