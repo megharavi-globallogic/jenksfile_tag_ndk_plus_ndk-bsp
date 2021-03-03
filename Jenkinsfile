@@ -2,7 +2,8 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "4.0.432.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)"
+	GIT_TAG = "4.0.435.0"
+	VERSION = ""
 	}
 	
   	stages {
@@ -54,7 +55,7 @@ pipeline {
                            	"files": [
                               	 	{
                                		   "pattern": "${GIT_TAG}.tar.gz",
-                               		   "target": "vizio-dallas-megha-test/"           								  
+                               		   "target": "vizio-dallas-megha-test/ndk/${GIT_TAG}"           								  
                               		}
                            		 ]
                        		  }"""
