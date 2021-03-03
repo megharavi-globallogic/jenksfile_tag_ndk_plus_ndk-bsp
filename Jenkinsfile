@@ -24,13 +24,14 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
+					rm -rf tag
+					mkdir tag
 					
-					git checkout ${GIT_TAG}
 					
 					
 					
 					'''
-					//mkdir tag
+					//git checkout ${GIT_TAG}
 					//cd tag
 					//git checkout ${GIT_TAG}
 					//cd ..
