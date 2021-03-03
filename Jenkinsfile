@@ -26,14 +26,10 @@ pipeline {
 					sh '''
 					rm -rf tag
 					mkdir tag
-					
-					
-					
+					cd tag
+					git checkout ${GIT_TAG}
 					
 					'''
-					//git checkout ${GIT_TAG}
-					//cd tag
-					//git checkout ${GIT_TAG}
 					//cd ..
 					//tar -czvf ${GIT_TAG}.tar.gz tag
 	//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
