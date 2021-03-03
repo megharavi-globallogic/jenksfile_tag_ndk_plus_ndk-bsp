@@ -28,6 +28,8 @@ pipeline {
 					sudo rm -rf ndk
 					cd ..
 					tar -czvf tag.tar.gz ndk_plus_bsp
+					mv tag.tar.gz ndk_plus_bsp
+					
 					
 					'''
 					//mv tag.tar.gz ndk_plus_bsp
