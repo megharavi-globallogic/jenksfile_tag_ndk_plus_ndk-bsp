@@ -26,20 +26,8 @@ pipeline {
 				sh 'tar -czvf ${GIT_TAG}.tar.gz ndk'
 			}
 		}
-		
-		
-		stage("download tagged code to workspace"){
-				steps {
-					sh ''''
-					echo $PWD
-					tar -czvf ${GIT_TAG}.tar.gz ndk
-					
-					'''
 					//git checkout ${GIT_TAG}
-					//sudo rm -rf *	
-					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
 					
-				}
 			
 		}
 
