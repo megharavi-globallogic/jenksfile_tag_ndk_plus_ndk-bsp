@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG ='4.0.436.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)'
+	git_tag ='4.0.436.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)'
 	}
 	
   	stages {
@@ -14,7 +14,7 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								git clone --branch ${GIT_TAG} git@github.com:BuddyTV/ndk.git
+								git clone --branch ${git_tag} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 				 }
@@ -25,8 +25,7 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				echo $GIT_TAG
-				tar -czvf $GIT_TAG.tar.gz ndk
+				tar -czvf $git_tag.tar.gz ndk
 				'''
 			}
 							
@@ -42,7 +41,7 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "(*).tar.gz",
+                               		   	"pattern": "(*).tar.gz(*)",
                                		  	 "target": "vizio-dallas-megha-test/ndk"           								  
                               			}
                            			]
