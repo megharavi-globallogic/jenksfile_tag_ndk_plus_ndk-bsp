@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "4.0.435.0"
+	GIT_TAG = "4.0.436.0-(1.20.9.1) "
 	}
 	
   	stages {
