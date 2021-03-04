@@ -35,14 +35,15 @@ pipeline {
 		stage('Uploading ndk & bsp to artifactory') {
             		steps {	
 				def uploadSpec = """{
- 		 		"files": [
- 		  		 {
-				 "pattern": "(*).tgz(*)",
-     				 "target": "vizio-dallas-megha-test/ndk"
-     				 "recursive": "false"
-  				   }
-		   		]
+  					"files": [
+  						  {
+   						   "pattern": "(*).tgz",
+   						   "target": "my-local-repo/{1}/"
+   						   "recursive": "false"
+   						  }
+ 					]
 				}"""
+				
 			}
 		}
 
