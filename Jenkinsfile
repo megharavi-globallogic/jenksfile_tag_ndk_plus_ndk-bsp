@@ -25,10 +25,11 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				echo ${GIT_TAG}
+				echo $GIT_TAG
+				tar -czvf $GIT_TAG.tar.gz ndk
 				'''
 			}
-							//tar -czvf $GIT_TAG.tar.gz ndk
+							
 
 		}
 					//git checkout ${GIT_TAG}
