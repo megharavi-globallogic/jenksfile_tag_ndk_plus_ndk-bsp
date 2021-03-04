@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = 4.0.436.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)
+	GIT_TAG ='4.0.436.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)'
 	}
 	
   	stages {
@@ -25,8 +25,8 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				echo ${GIT_TAG}
-				tar -czvf ${GIT_TAG}.tar.gz ndk
+				echo ${env.GIT_TAG}
+				tar -czvf ${env.GIT_TAG}.tar.gz ndk
 				'''
 			}
 		}
@@ -40,8 +40,8 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "${GIT_TAG}.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/ndk/${GIT_TAG}"           								  
+                               		   	"pattern": "${env.GIT_TAG}.tar.gz",
+                               		  	 "target": "vizio-dallas-megha-test/ndk/${env.GIT_TAG}"           								  
                               			}
                            			]
                        		  }"""
