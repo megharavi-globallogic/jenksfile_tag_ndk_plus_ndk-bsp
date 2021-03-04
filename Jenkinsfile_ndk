@@ -29,6 +29,9 @@ pipeline {
 				sh ''' 
 				set -x
 				tar -czvf $ndk_tag.tar.gz ndk
+				sudo rm -rf ndk
+				mkdir ndk
+				mv $ndk_tag.tar.gz ndk
 				'''
 			}
 							
@@ -45,8 +48,8 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "(*).tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/ndk"    
+                               		   	"pattern": "ndk/(*).tar.gz",
+                               		  	 "target": "vizio-dallas-megha-test"    
 						
                               			}
                            			]
