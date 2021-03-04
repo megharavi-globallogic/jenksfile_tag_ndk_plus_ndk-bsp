@@ -21,6 +21,13 @@ pipeline {
 			 }
 		 }
 		
+		Stage("pack the files") {
+			steps{
+				sh 'tar -czvf ${GIT_TAG}.tar.gz ndk'
+			}
+		}
+		
+		
 		stage("download tagged code to workspace"){
 				steps {
 					sh ''''
