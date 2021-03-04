@@ -24,10 +24,12 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
-					git checkout ${GIT_TAG}
+					cd ndk
+					
 					
 					
 					'''
+					//git checkout ${GIT_TAG}
 					//sudo rm -rf *
 					//cd ndk_plus_bsp
 					//tag.tar.gz ${GIT_TAG}.tar.gz
