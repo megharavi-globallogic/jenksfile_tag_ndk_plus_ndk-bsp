@@ -14,7 +14,7 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								git clone git@github.com:BuddyTV/ndk
+								 git clone --branch ${GIT_TAG} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 				 }
