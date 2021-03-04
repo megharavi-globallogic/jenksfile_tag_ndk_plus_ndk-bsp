@@ -42,7 +42,7 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "${GIT_TAG}.tar.gz",
+                               		   	"pattern": "(*).tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/ndk"           								  
                               			}
                            			]
