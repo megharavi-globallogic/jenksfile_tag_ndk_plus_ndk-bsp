@@ -24,6 +24,7 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh ''''
+					echo $PWD
 					tar -czvf ${GIT_TAG}.tar.gz ndk
 					
 					'''
