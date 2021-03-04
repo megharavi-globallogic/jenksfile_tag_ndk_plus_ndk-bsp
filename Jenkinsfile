@@ -30,26 +30,23 @@ pipeline {
 			}
 		}
 					//git checkout ${GIT_TAG}
-					
-			
-		}
 
 		stage('Uploading ndk & bsp to artifactory') {
-            	steps {
-                	rtUpload (
-                   	serverId: 'artifactory',
-                   	spec:
-                       	     """{
-                           	"files": [
-                              	 	{
-                               		   "pattern": "${GIT_TAG}.tar.gz",
-                               		   "target": "vizio-dallas-megha-test/ndk/${GIT_TAG}"           								  
-                              		}
-                           		 ]
+            		steps {
+                		rtUpload (
+                   		serverId: 'artifactory',
+                   		spec:
+                       	 	    """{
+                           		"files": [
+                              	 		{
+                               		   	"pattern": "${GIT_TAG}.tar.gz",
+                               		  	 "target": "vizio-dallas-megha-test/ndk/${GIT_TAG}"           								  
+                              			}
+                           			]
                        		  }"""
-              		)
+              			)
 			//sh 'rm -rf *.tar.gz'
-           	}
+           		}
 		}
 		
 	}
