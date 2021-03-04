@@ -26,9 +26,10 @@ pipeline {
 				sh ''' 
 				set -x
 				echo ${GIT_TAG}
-				tar -czvf ${GIT_TAG}.tar.gz ndk
 				'''
 			}
+							//tar -czvf $GIT_TAG.tar.gz ndk
+
 		}
 					//git checkout ${GIT_TAG}
 
@@ -40,7 +41,7 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "${env.GIT_TAG}.tar.gz",
+                               		   	"pattern": "${GIT_TAG}.tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/ndk"           								  
                               			}
                            			]
