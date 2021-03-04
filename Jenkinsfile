@@ -2,7 +2,8 @@ pipeline {
 	agent any
 	
 	environment{
-	git_tag ='4.0.436.0'
+	ndk_tag ='4.0.436.0'
+	ndk_bsp_tag = 'cbbccnk'
 	}
 	
   	stages {
@@ -14,7 +15,7 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								git clone --branch ${git_tag} git@github.com:BuddyTV/ndk.git
+								git clone --branch ${ndk_tag} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 				 }
@@ -25,27 +26,13 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				tar -czvf $git_tag.tar.gz ndk
+				tar -czvf $ndk_tag.tar.gz ndk
 				'''
 			}
 							
 
 		}
 		
-		stage('Uploading ndk & bsp to artifactory') {
-            		steps {	
-				def uploadSpec = """{
-  					"files": [
-  						  {
-   						   "pattern": "(*).tgz",
-   						   "target": "my-local-repo/{1}/"
-   						   "recursive": "false"
-   						  }
- 					]
-				}"""
-				
-			}
-		}
 
 		stage('Uploading ndk & bsp artifactory') {
             		steps {
