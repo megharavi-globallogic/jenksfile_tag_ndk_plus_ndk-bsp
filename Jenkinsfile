@@ -41,7 +41,7 @@ pipeline {
                            		"files": [
                               	 		{
                                		   	"pattern": "${env.GIT_TAG}.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/ndk/${env.GIT_TAG}"           								  
+                               		  	 "target": "vizio-dallas-megha-test/ndk"           								  
                               			}
                            			]
                        		  }"""
