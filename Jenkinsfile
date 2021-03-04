@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	ndk_tag ='4.0.436.0'
+	TAG ='4.0.436.0'
 	ndk_bsp_tag = 'cbbccnk'
 	}
 	
@@ -15,7 +15,7 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								git clone --branch ${ndk_tag} git@github.com:BuddyTV/ndk.git
+								git clone --branch ${TAG} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 				 }
@@ -26,7 +26,7 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				tar -czvf $ndk_tag.tar.gz ndk
+				tar -czvf $TAG.tar.gz ndk
 				'''
 			}
 							
