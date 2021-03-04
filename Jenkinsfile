@@ -46,7 +46,7 @@ pipeline {
 			}
 		}
 
-		stage('Uploading ndk & bsp to artifactory') {
+		stage('Uploading ndk & bsp artifactory') {
             		steps {
                 		rtUpload (
                    		serverId: 'artifactory',
