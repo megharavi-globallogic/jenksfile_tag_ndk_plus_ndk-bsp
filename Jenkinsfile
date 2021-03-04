@@ -24,7 +24,6 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh '''
-					cd ndk
 					git checkout ${GIT_TAG}
 					
 					
@@ -35,8 +34,16 @@ pipeline {
 									//mv !(ndk) tag
 					//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
 					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
-
+//sudo rm -rf ndk
+					//cd ..
+					//tar -czvf ${GIT_TAG}.tar.gz ndk_plus_bsp
+					//cd ndk_plus_bsp
+					//mkdir file
+					
+					//cd ..
+					//mv ${GIT_TAG}.tar.gz ndk_plus_bsp
 				}
+			
 		}
 
 		stage('Uploading ndk & bsp to artifactory') {
