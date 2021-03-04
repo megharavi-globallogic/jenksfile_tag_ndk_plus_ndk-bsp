@@ -2,6 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
+	//insert the respective tag number for ndk repo to get the required code
 	ndk_tag='4.0.436.0-(1.20.9.1)'
 	}
 	
@@ -18,11 +19,13 @@ pipeline {
 							'''
 						}
 				 }
+				 
 			 }
 		 }
 		
 		stage("pack the files") {
 			steps{
+				//creating a tar file for the requested tag number
 				sh ''' 
 				set -x
 				tar -czvf $ndk_tag.tar.gz ndk
@@ -33,8 +36,9 @@ pipeline {
 		}
 		
 
-		stage('Uploading ndk & bsp artifactory') {
+		stage('Upload ndk tar to artifactory') {
             		steps {
+				//uploading to the tar file to the artifactory
                 		rtUpload (
                    		serverId: 'artifactory',
                    		spec:
@@ -47,7 +51,6 @@ pipeline {
                            			]
                        		  }"""
               			)
-			//sh 'rm -rf *.tar.gz'
            		}
 		}
 		
