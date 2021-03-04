@@ -14,7 +14,7 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								 git clone --branch ${GIT_TAG} git@github.com:BuddyTV/ndk.git
+								git clone --branch ${GIT_TAG} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 				 }
@@ -23,7 +23,10 @@ pipeline {
 		
 		stage("pack the files") {
 			steps{
-				sh 'tar -czvf ${GIT_TAG}.tar.gz ndk'
+				sh ''' 
+				set -x
+				tar -czvf ${GIT_TAG}.tar.gz ndk
+				'''
 			}
 		}
 					//git checkout ${GIT_TAG}
