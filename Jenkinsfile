@@ -28,20 +28,9 @@ pipeline {
 					
 					'''
 					//git checkout ${GIT_TAG}
-					//sudo rm -rf *
-					//cd ndk_plus_bsp
-					
-									//mv !(ndk) tag
-					//rm -rf Tag_${GIT_TAG} Tag_${GIT_TAG}@tmp
+					//sudo rm -rf *	
 					//checkout scm: [$class: 'GitSCM', userRemoteConfigs: [[url: 'git@github.com:BuddyTV/ndk', credentialsId: 'git-ndk' ]], branches: [[name: '${GIT_TAG}']]]
-//sudo rm -rf ndk
-					//cd ..
 					
-					//cd ndk_plus_bsp
-					//mkdir file
-					
-					//cd ..
-					//mv ${GIT_TAG}.tar.gz ndk_plus_bsp
 				}
 			
 		}
