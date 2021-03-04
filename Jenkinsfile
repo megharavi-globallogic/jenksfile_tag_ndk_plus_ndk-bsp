@@ -29,11 +29,13 @@ pipeline {
 					cd ..
 					tar -czvf ${GIT_TAG}.tar.gz ndk_plus_bsp
 					cd ndk_plus_bsp
-					sudo rm -rf *
+					mkdir file
+					
 					cd ..
 					mv ${GIT_TAG}.tar.gz ndk_plus_bsp
 					
 					'''
+					//sudo rm -rf *
 					//cd ndk_plus_bsp
 					//tag.tar.gz ${GIT_TAG}.tar.gz
 									//mv !(ndk) tag
