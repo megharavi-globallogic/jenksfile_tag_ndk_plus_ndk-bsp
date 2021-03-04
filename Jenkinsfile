@@ -24,7 +24,6 @@ pipeline {
 		stage("download tagged code to workspace"){
 				steps {
 					sh ''''
-					git checkout ${GIT_TAG}
 					cd ndk
 					git checkout ${GIT_TAG}
 					
