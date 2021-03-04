@@ -31,7 +31,20 @@ pipeline {
 							
 
 		}
-					//git checkout ${GIT_TAG}
+		
+		stage('Uploading ndk & bsp to artifactory') {
+            		steps {	
+				def uploadSpec = """{
+ 		 		"files": [
+ 		  		 {
+				 "pattern": "(*).tgz(*)",
+     				 "target": "vizio-dallas-megha-test/ndk"
+     				 "recursive": "false"
+  				   }
+		   		]
+				}"""
+			}
+		}
 
 		stage('Uploading ndk & bsp to artifactory') {
             		steps {
