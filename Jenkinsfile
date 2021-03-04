@@ -26,7 +26,7 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				tar -czvf ${ndk_tag}.tar.gz ndk
+				tar -czvf $ndk_tag.tar.gz ndk
 				'''
 			}
 							
@@ -42,7 +42,7 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "(*).tar.gz(*)",
+                               		   	"pattern": "(*).tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/"           								  
                               			}
                            			]
