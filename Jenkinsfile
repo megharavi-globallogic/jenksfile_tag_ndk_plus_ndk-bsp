@@ -21,7 +21,7 @@ pipeline {
 			 }
 		 }
 		
-		Stage("pack the files") {
+		stage("pack the files") {
 			steps{
 				sh 'tar -czvf ${GIT_TAG}.tar.gz ndk'
 			}
