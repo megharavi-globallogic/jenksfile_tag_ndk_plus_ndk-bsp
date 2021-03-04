@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment{
-	GIT_TAG = "4.0.436.0-(1.20.9.1) "
+	GIT_TAG = "4.0.436.0-(SX7A_11.0.5.1_SX7B_7.0.5.1)"
 	}
 	
   	stages {
@@ -23,9 +23,10 @@ pipeline {
 		
 		stage("download tagged code to workspace"){
 				steps {
-					sh '''
+					sh ''''
+					git checkout ${GIT_TAG}
 					cd ndk
-					
+					git checkout ${GIT_TAG}
 					
 					
 					'''
