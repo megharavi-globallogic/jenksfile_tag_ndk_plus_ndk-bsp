@@ -3,7 +3,6 @@ pipeline {
 	
 	environment{
 	ndk_tag='4.0.436.0-(1.20.9.1)'
-	ndk_bsp_tag = 'cbbccnk'
 	}
 	
   	stages {
