@@ -25,8 +25,8 @@ pipeline {
 			steps{
 				sh ''' 
 				set -x
-				echo ${env.GIT_TAG}
-				tar -czvf ${env.GIT_TAG}.tar.gz ndk
+				echo ${GIT_TAG}
+				tar -czvf ${GIT_TAG}.tar.gz ndk
 				'''
 			}
 		}
