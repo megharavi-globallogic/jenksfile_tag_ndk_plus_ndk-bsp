@@ -42,7 +42,7 @@ pipeline {
                            		"files": [
                               	 		{
                                		   	"pattern": "(*).tar.gz(*)",
-                               		  	 "target": "vizio-dallas-megha-test/ndk"           								  
+                               		  	 "target": "vizio-dallas-megha-test/"           								  
                               			}
                            			]
                        		  }"""
