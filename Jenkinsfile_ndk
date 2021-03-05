@@ -17,7 +17,7 @@ pipeline {
 								rm -rf *
 								git clone --branch ${ndk_tag} git@github.com:BuddyTV/ndk.git
 							'''
-						},
+						}
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                                        			 sh '''
