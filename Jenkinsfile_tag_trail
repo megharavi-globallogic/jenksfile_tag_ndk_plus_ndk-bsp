@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+	
+	environment {
+      	ndk_bsp_tag = '4.0.436.0'
+      	}s
+	
+       	stages {
+                stage('get the latest tag number') {
+			steps {
+				script {
+					withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
+					{
+                                        sh '''
+					set -x
+					rm -rf *
+					git clone git@github.com:BuddyTV/ndk.git
+					
+					'''
+                                        }
+                                }
+                       }
+		 }
+	}
+}
