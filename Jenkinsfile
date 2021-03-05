@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code
-	ndk_tag='4.0.437.0'
+	ndk_tag='4.0.436.0'
 	}
 	
   	stages {
