@@ -11,6 +11,7 @@ pipeline {
 					rm -rf *
 					git clone git@github.com:BuddyTV/ndk.gits
 					cd ndk
+					git describe --tags > tags
 	
 					
 					'''
