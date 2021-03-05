@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code
-	ndk_tag='4.0.436.0-(1.20.9.1)'
+	ndk_tag='4.0.437.0'
 	}
 	
   	stages {
@@ -28,7 +28,8 @@ pipeline {
 				//creating a tar file for the requested tag number
 				sh ''' 
 				set -x
-				tar -czvf $ndk_tag.tar.gz ndk
+				tar -czvf $ndk_tag_ndk.tar.gz ndk
+				
 				'''
 			}
 							
@@ -45,7 +46,7 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "(*).tar.gz",
+                               		   	"pattern": "(*)_ndk.tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/${ndk_tag}/"    
 						
                               			}
