@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code
-	ndk_tag='4.0.436.0'
+	tag='4.0.436.0'
 	}
 	
   	stages {
@@ -15,14 +15,14 @@ pipeline {
                     					sh '''
 								set -x
 								rm -rf *
-								git clone --branch ${ndk_tag} git@github.com:BuddyTV/ndk.git
+								git clone --branch ${tag} git@github.com:BuddyTV/ndk.git
 							'''
 						}
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                                        			 sh '''
 								set -x
-								git clone --branch ${ndk_tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
+								git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
 							'''
                                        		}
 				 }
@@ -35,8 +35,8 @@ pipeline {
 				//creating a tar file for the requested tag number
 				sh ''' 
 				set -x
-				tar -czvf $ndk_tag.ndk.tar.gz ndk
-				tar -czvf $ndk_tag.ndk_bsp.tar.gz vizio_ndk_bsp
+				tar -czvf $tag.ndk.tar.gz ndk
+				tar -czvf $tag.ndk_bsp.tar.gz vizio_ndk_bsp
 				
 				'''
 			}
@@ -55,11 +55,11 @@ pipeline {
                            		"files": [
                               	 		{
                                		   	"pattern": "(*).ndk.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/${ndk_tag}/"    
+                               		  	 "target": "vizio-dallas-megha-test/${tag}/"    
                               			},
 						{
                                		   	"pattern": "(*).ndk_bsp.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/${ndk_tag}/"    
+                               		  	 "target": "vizio-dallas-megha-test/${tag}/"    
                               			}
 						
                            			]
