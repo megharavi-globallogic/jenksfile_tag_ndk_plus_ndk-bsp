@@ -7,7 +7,7 @@ pipeline {
 	}
 	
   	stages {
-		stage('Clone ndk repo') {
+		stage('Clone ndk&ndk_bsp repo') {
 			 steps {
 				 script {
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
@@ -45,7 +45,7 @@ pipeline {
 		}
 		
 
-		stage('Upload ndk tar to artifactory') {
+		stage('Upload ndk&ndk_bsp tar to artifactory') {
             		steps {
 				//uploading to the tar file to the artifactory
                 		rtUpload (
