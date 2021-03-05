@@ -2,8 +2,8 @@ pipeline {
     agent any
 	
 	environment {
-      	ndk_bsp_tag = '4.0.436.0'
-      	}s
+      	tag = '4.0.436.0'
+      	}
 	
        	stages {
                 stage('get the latest tag number') {
