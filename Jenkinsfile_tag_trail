@@ -9,7 +9,7 @@ pipeline {
                                         sh '''
 					set -x
 					rm -rf *
-					git clone git@github.com:BuddyTV/ndk.gits
+					git clone git@github.com:BuddyTV/ndk.git
 					cd ndk
 					git describe --tags > tags
 	
