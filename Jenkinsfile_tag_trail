@@ -1,10 +1,5 @@
 pipeline {
     agent any
-	
-	environment {
-      	tag = '4.0.436.0'
-      	}
-	
        	stages {
                 stage('get the latest tag number') {
 			steps {
@@ -14,7 +9,9 @@ pipeline {
                                         sh '''
 					set -x
 					rm -rf *
-					git clone git@github.com:BuddyTV/ndk.git
+					git clone git@github.com:BuddyTV/ndk.gits
+					cd ndk
+	
 					
 					'''
                                         }
