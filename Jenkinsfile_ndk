@@ -28,7 +28,7 @@ pipeline {
 				//creating a tar file for the requested tag number
 				sh ''' 
 				set -x
-				tar -czvf $ndk_tag_ndk.tar.gz ndk
+				tar -czvf $ndk_tag.ndk.tar.gz ndk
 				
 				'''
 			}
