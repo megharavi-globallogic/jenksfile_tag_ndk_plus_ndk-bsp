@@ -15,7 +15,7 @@ pipeline {
 					//echo "${env.tag}"
 					'''
                                         }
-				env.tag = "$(git describe --tags)"
+				env.tag = "${git describe --tags}"
                                 }
                        }
 		 }
