@@ -11,12 +11,11 @@ pipeline {
 					rm -rf *
 					git clone git@github.com:BuddyTV/ndk.git
 					cd ndk
-					tags = "$(git describe --tags)"
-					echo "$tags"
-					//env.tag = tags
+					tags < "$(git describe --tags)"
 					//echo "${env.tag}"
 					'''
                                         }
+				env.tag = "$(git describe --tags)"
                                 }
                        }
 		 }
