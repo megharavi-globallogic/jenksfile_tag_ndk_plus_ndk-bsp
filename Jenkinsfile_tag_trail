@@ -11,7 +11,9 @@ pipeline {
 					rm -rf *
 					git clone git@github.com:BuddyTV/ndk.git
 					cd ndk
-					env.tag = "$(git describe --tag)"
+					tag = "$(git describe --tags)"
+					env.tag = "${tag}"
+					echo env.tag
 					'''
                                         }
                                 }
