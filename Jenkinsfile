@@ -37,8 +37,8 @@ pipeline {
 				set -x
 				tar -czvf $tag.ndk.tar.gz ndk
 				tar -czvf $tag.ndk_bsp.tar.gz vizio_ndk_bsp
-				tar -tzf tag.ndk.tar.gz>/dev/null
-				tar -tzf tag.ndk_bsp.tar.gz>/dev/null
+				tar -tzf $tag.ndk.tar.gz>/dev/null
+				tar -tzf $tag.ndk_bsp.tar.gz>/dev/null
 				'''
 			}
 							
