@@ -34,9 +34,9 @@ pipeline {
 			steps{
 				//creating a tar file for the requested tag number
 				sh ''' 
-				set -x
 				tar -czvf $tag.ndk.tar.gz ndk
 				tar -czvf $tag.ndk_bsp.tar.gz vizio_ndk_bsp
+				set -x
 				tar -tzf $tag.ndk.tar.gz>/dev/null
 				tar -tzf $tag.ndk_bsp.tar.gz>/dev/null
 				'''
