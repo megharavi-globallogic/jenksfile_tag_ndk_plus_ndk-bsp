@@ -14,8 +14,9 @@ pipeline {
 						{
                     					sh '''
 								set -x
-								mkdir ndk_tag
 								rm -rf *
+								mkdir ndk_tag
+								cd ndk_tag
 								git clone --branch ${tag} git@github.com:BuddyTV/ndk.git
 							'''
 						}
@@ -24,8 +25,9 @@ pipeline {
                                        			 sh '''
 								set -x
 								mkdir ndk_bsp_tag
-								git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
+								cd ndk_bsp_tag
 							'''
+							//	git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
                                        		}
 				 }
 				 
@@ -39,11 +41,12 @@ pipeline {
 				cd ndk_tag
 				tar -czvf $tag-ndk.tar.gz ndk
 				cd ..
-				cd ndk_bsp_tag
-				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
-				cd ..
+				
 				
 				'''
+				//cd ndk_bsp_tag
+				//tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
+				//cd ..
 			}
 							
 
