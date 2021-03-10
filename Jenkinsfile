@@ -42,6 +42,7 @@ pipeline {
 				sh ''' 
 				cd ndk_tag
 				tar -czvf $tag-ndk.tar.gz ndk
+				cd ..
 				cd ndk_bsp_tag
 				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
