@@ -16,7 +16,7 @@ pipeline {
 								set -x
 								rm -rf ndk_bsp_tag
 								mkdir ndk_bsp_tag
-								cd ndk_tag
+								cd ndk_bsp_tag
 								git submodule add --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp
 							'''
 						}
