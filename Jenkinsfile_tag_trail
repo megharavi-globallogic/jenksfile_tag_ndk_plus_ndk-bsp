@@ -14,10 +14,10 @@ pipeline {
 						{
                     					sh '''
 								set -x
-								rm -rf ndk_tag
-								mkdir ndk_tag
+								rm -rf ndk_bsp_tag
+								mkdir ndk_bsp_tag
 								cd ndk_tag
-								git clone --branch ${tag} git@github.com:BuddyTV/ndk.git
+								git submodule add --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp
 							'''
 						}
 				}
