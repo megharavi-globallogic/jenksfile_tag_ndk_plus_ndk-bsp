@@ -34,8 +34,10 @@ pipeline {
 				sh ''' 
 				cd vizio_ndk_bsp
 				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
+				cd ..
 				cd vizio_ndk_bsp/ndk
 				rm -rf .git  .gitattributes  .gitignore
+				cd ..
 				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
 				
@@ -54,7 +56,7 @@ pipeline {
                        	 	    """{
                            		"files": [
 						{
-                               		   	"pattern": "ndk_bsp_tg/(*)-ndk_bsp.tar.gz",
+                               		   	"pattern": "vizio_ndk_bsp/(*)-ndk_bsp.tar.gz",
                                		  	"target": "vizio-dallas-megha-test/${tag}/"    
                               			}
                            			]
