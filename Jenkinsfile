@@ -15,7 +15,7 @@ pipeline {
 						{
                                        			 sh '''
 								set -x
-								rm -rf*
+								rm -rf *
 								git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								cd vizio_ndk_bsp/ndk
 								git submodule init
