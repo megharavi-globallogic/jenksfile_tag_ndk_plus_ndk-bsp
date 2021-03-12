@@ -44,6 +44,7 @@ pipeline {
 				tar -czvf $tag-ndk.tar.gz ndk
 				cd ..
 				cd ndk_bsp_tag
+				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
 				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
 				
