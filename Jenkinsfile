@@ -10,24 +10,16 @@ pipeline {
 		stage('Clone ndk & ndk_bsp tags') {
 			 steps {
 				 script {
-						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
-						{
-                    					sh '''
-								set -x
-								rm -rf ndk_tag
-								mkdir ndk_tag
-								cd ndk_tag
-								git clone --branch ${tag} git@github.com:BuddyTV/ndk.git
-							'''
-						}
+						
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                                        			 sh '''
 								set -x
-								rm -rf ndk_bsp_tag
-								mkdir ndk_bsp_tag
-								cd ndk_bsp_tag
+								rm -rf*
 								git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
+								cd vizio_ndk_bsp/ndk
+								git submodule init
+								git submodule update
 								
 							'''
                                        		}
@@ -40,10 +32,7 @@ pipeline {
 			steps{
 				//creating a tar file for the requested tag number
 				sh ''' 
-				cd ndk_tag
-				tar -czvf $tag-ndk.tar.gz ndk
-				cd ..
-				cd ndk_bsp_tag
+				cd vizio_ndk_bsp
 				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
 				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
@@ -62,17 +51,12 @@ pipeline {
                    		spec:
                        	 	    """{
                            		"files": [
-                              	 		{
-                               		   	"pattern": "ndk_tg/(*)-ndk.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/${tag}/"    
-                              			},
 						{
                                		   	"pattern": "ndk_bsp_tg/(*)-ndk_bsp.tar.gz",
-                               		  	 "target": "vizio-dallas-megha-test/${tag}/"    
+                               		  	"target": "vizio-dallas-megha-test/${tag}/"    
                               			}
-						
                            			]
-                       		  }"""
+                       		   }"""
               			)
            		}
 		}
