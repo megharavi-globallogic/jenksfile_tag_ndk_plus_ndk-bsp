@@ -1,23 +1,28 @@
 pipeline {
-    agent any
-       	stages {
-                stage('get the latest tag number') {
-			steps {
-				script {
-					withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
-					{
-                                        sh '''
-					set -x
-					rm -rf *
-					git clone git@github.com:BuddyTV/ndk.git
-					cd ndk
-					env.TAG = "{git describe --tags}"
-					//echo "${env.TAG}"
-					'''
-                                        }
-				
-                                }
-                       }
-		 }
+	agent any
+	
+	environment{
+	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
+	tag='4.0.434.0'
 	}
-}
+	
+  	stages {
+		stage('Clone ndk & ndk_bsp tags') {
+			 steps {
+				 script {
+						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
+						{
+                    					sh '''
+								set -x
+								rm -rf ndk_tag
+								mkdir ndk_tag
+								cd ndk_tag
+								git clone --branch ${tag} git@github.com:BuddyTV/ndk.git
+							'''
+						}
+				}
+			}
+		}
+	}
+}			
+						
