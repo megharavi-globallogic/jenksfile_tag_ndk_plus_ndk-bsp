@@ -62,11 +62,11 @@ pipeline {
                        	 	    """{
                            		"files": [
                               	 		{
-                               		   	"pattern": "ndk_tag/(*)-ndk.tar.gz",
+                               		   	"pattern": "ndk_tg/(*)-ndk.tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/${tag}/"    
                               			},
 						{
-                               		   	"pattern": "ndk_bsp_tag/(*)-ndk_bsp.tar.gz",
+                               		   	"pattern": "ndk_bsp_tg/(*)-ndk_bsp.tar.gz",
                                		  	 "target": "vizio-dallas-megha-test/${tag}/"    
                               			}
 						
