@@ -36,7 +36,7 @@ pipeline {
 				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
 				cd ..
 				cd vizio_ndk_bsp/ndk
-				rm -rf .git  .gitattributes  .gitignore
+				rm -rf .git .gitignore
 				cd ../..
 				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
