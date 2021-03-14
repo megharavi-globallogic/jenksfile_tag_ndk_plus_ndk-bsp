@@ -1,28 +1,134 @@
 pipeline {
-	agent any
-	
-	environment{
-	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	tag='4.0.434.0'
+	agent none
+    	environment {
+		version_release = "${params.VERSION_RELEASE}"
+		
+		//uploading tag modules to soc
+		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${version_release}/"
 	}
 	
-  	stages {
-		stage('Clone ndk & ndk_bsp tags') {
-			 steps {
-				 script {
-						withCredentials([sshUserPrivateKey(credentialsId: 'git-ndk', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
-						{
-                    					sh '''
-								set -x
-								rm -rf ndk_bsp_tag
-								mkdir ndk_bsp_tag
-								cd ndk_bsp_tag
-								git submodule add --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp
-							'''
-						}
+	options {
+        timeout(time: 7, unit: 'DAYS')
+    	}
+	
+    stages {
+    	stage("Set version name"){
+        	steps {
+                	script {
+                    		currentBuild.displayName = "${version_release}"
+                	}
+            	}
+        }
+	
+    	stage('QA Approval') {
+		agent none
+            	steps {
+                	script {
+                		println "${version_release}"
+                   		def inputReleaseStatus
+                    		def inputBUGS
+				
+
+                		def userInput = input(
+                            	id: 'userInput', message: 'Enter path of test reports:?',
+                            	parameters: [
+				    choice(name: 'RELEASE_STATUS_QA', 
+				    	    choices: 'DEV-QA-APPROVED\nDEV-QA-DQed\nONLY-TO-SOC', 
+					    description: "Are you releasing ${{version_release} tag modules to SOC?"),
+                                    string(defaultValue: 'NA',
+                                            description: 'List of JIRA NUMBERS for issues found or any notes',
+                                            name: 'BUGS')
+				  
+                            	])
+
+                    		// Save to variables. Default to empty string if not found.
+                    		env.inputReleaseStatus = userInput.RELEASESTATUSQA?:''
+                    		env.inputBUGS = userInput.BUGS?:''
+				
+                    
+                    		println "$inputReleaseStatus"
+                    		println "$inputBUGS"
+			}
+                	
+        	}
+	}
+	stage("Delete_Artifacts"){
+		agent any
+		steps {
+        		script {
+			
+				env.inputBUGS=sh (script: "echo $inputBUGS | sed 's/ /\\ /g'", returnStdout: true).trim()
+				println "====$inputBUGS==="
+				
+				
+				if ("${env.inputReleaseStatus}" == "DEV-QA-APPROVED")
+				{
+					env.colorMatched='Green'
+					env.releaseVQA='RELEASED-TO-VQA'
+					sh ''' 
+					echo "==== QA approved the ${version_release} tag code"
+					echo ==============================================ARTIFACTS_DELETED==========================================================
+                    			'''
+				}
+				else if("${env.inputReleaseStatus}" == "ONLY-TO-SOC")
+				{	
+					sh ''' 
+					echo "==== QA approved Only to SOC"
+					echo ==============================================ARTIFACTS_DELETED==========================================================
+                    			'''
+				}
+				else
+                        	{
+					env.colorMatched='Red'
+					env.releaseVQA='NOT-RELEASED-TO-VQA'
+					sh '''
+					echo "==== QA dqed the ${version_release} tag code"
+					exit 1
+				'''
 				}
 			}
 		}
 	}
-}			
-						
+	stage("Download_Artifacts"){
+		agent any
+		steps {
+                	rtDownload (
+                   	serverId: 'artifactory',
+                   	spec:
+                      		"""{
+                           		"files": [
+                               				{
+                                 				"pattern":"vizio-dallas-megha-test/${version_release}/", 
+                               		  			"target":"${version_release}-ndk_bsp.tar.gz"
+							}
+					]
+                        	}""",
+                   		failNoOp: true
+                	)
+           	}
+	}
+    }
+    post{ 
+    	success {
+		script {
+			def success_attc = [
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to soc. click on the link below to downlaod the required code"
+					 ]
+				],
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": "https://artifactory.vizio.com/ui/repos/tree/General/vizio-dallas-external-ndk-plus-bsp"
+					 ]
+				]
+        		]
+      		}
+    	}
+   }
+   }
+}
