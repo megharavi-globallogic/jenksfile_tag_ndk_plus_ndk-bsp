@@ -34,7 +34,7 @@ pipeline {
                             	parameters: [
 				    choice(name: 'RELEASE_STATUS_QA', 
 				    	    choices: 'DEV-QA-APPROVED\nDEV-QA-DQed\nONLY-TO-SOC', 
-					    description: "Are you releasing ${{version_release} tag modules to SOC?"),
+					    description: "Are you releasing ${version_release} tag modules to SOC?"),
                                     string(defaultValue: 'NA',
                                             description: 'List of JIRA NUMBERS for issues found or any notes',
                                             name: 'BUGS')
