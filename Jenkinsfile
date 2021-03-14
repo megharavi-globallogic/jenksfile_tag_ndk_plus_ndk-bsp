@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	tag='4.0.434.0'
+	VERSION_RELEASE='4.0.434.0'
 	}
 	
   	stages {
@@ -16,7 +16,7 @@ pipeline {
                                        			 sh '''
 								set -x
 								rm -rf *
-								git clone --branch ${tag} git@github.com:BuddyTV/vizio_ndk_bsp.git
+								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								cd vizio_ndk_bsp/ndk
 								git submodule init
 								git submodule update
@@ -38,7 +38,7 @@ pipeline {
 				cd vizio_ndk_bsp/ndk/public
 				rm -rf .git .gitignore
 				cd ../../..
-				tar -czvf $tag-ndk_bsp.tar.gz vizio_ndk_bsp
+				tar -czvf $VERSION_RELEASE-ndk_bsp.tar.gz vizio_ndk_bsp
 				'''
 				
 			}
@@ -57,7 +57,7 @@ pipeline {
                            		"files": [
 						{
                                		   	"pattern": "(*)-ndk_bsp.tar.gz",
-                               		  	"target": "vizio-dallas-megha-test/${tag}/"    
+                               		  	"target": "vizio-dallas-megha-test/${VERSION_RELEASE}/"    
                               			}
                            			]
                        		   }"""
