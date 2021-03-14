@@ -63,23 +63,17 @@ pipeline {
 				
 				if ("${env.inputReleaseStatus}" == "DEV-QA-APPROVED")
 				{
-					env.colorMatched='Green'
 					env.releaseVQA='RELEASED-TO-VQA'
-					sh ''' 
-					echo "==== QA approved the ${version_release} tag code"
-					echo ==============================================ARTIFACTS_DELETED==========================================================
-                    			'''
+					sh 'echo ==== QA approved the ${version_release} tag code'
+					
 				}
 				else if("${env.inputReleaseStatus}" == "ONLY-TO-SOC")
 				{	
-					sh ''' 
-					echo "==== QA approved Only to SOC"
-					echo ==============================================ARTIFACTS_DELETED==========================================================
-                    			'''
+					env.releaseVQA='ONLY-TO-SOC'
+					sh 'echo ==== QA approved Only to SOC'
 				}
 				else
                         	{
-					env.colorMatched='Red'
 					env.releaseVQA='NOT-RELEASED-TO-VQA'
 					sh '''
 					echo "==== QA dqed the ${version_release} tag code"
