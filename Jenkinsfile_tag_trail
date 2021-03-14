@@ -84,7 +84,7 @@ pipeline {
 					sh '''
 					echo "==== QA dqed the ${version_release} tag code"
 					exit 1
-				'''
+					'''
 				}
 			}
 		}
