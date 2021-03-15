@@ -15,6 +15,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
+				sh ' sudo rm -rf *'
                     		currentBuild.displayName = "${VERSION_RELEASE}"
                 	}
             	}
@@ -93,6 +94,7 @@ pipeline {
 					]
                         	}""",
                    		failNoOp: true
+				sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
                 	)
            	}
 	}
