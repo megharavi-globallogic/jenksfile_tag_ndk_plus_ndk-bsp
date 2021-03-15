@@ -1,10 +1,10 @@
 pipeline {
 	agent none
     	environment {
-		version_release = "${params.VERSION_RELEASE}"
+		VERSION_RELEASE = "${params.VERSION_RELEASE}"
 		
 		//uploading tag modules to soc
-		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${version_release}/"
+		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
 	}
 	
 	options {
@@ -15,7 +15,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "${version_release}"
+                    		currentBuild.displayName = "${VERSION_RELEASE}"
                 	}
             	}
         }
@@ -24,7 +24,7 @@ pipeline {
 		agent none
             	steps {
                 	script {
-                		println "${version_release}"
+                		println "${VERSION_RELEASE}"
                    		def inputReleaseStatus
                     		def inputBUGS
 				
@@ -34,7 +34,7 @@ pipeline {
                             	parameters: [
 				    choice(name: 'RELEASESTATUSQA', 
 				    	    choices: 'DEV-QA-APPROVED\nDEV-QA-DQed\nONLY-TO-SOC', 
-					    description: "Are you releasing ${version_release} tag modules to SOC?"),
+					    description: "Are you releasing ${VERSION_RELEASE} tag modules to SOC?"),
                                     string(defaultValue: 'NA',
                                             description: 'List of JIRA NUMBERS for issues found or any notes',
                                             name: 'BUGS')
@@ -64,7 +64,7 @@ pipeline {
 				if ("${env.inputReleaseStatus}" == "DEV-QA-APPROVED")
 				{
 					env.releaseVQA='RELEASED-TO-VQA'
-					sh 'echo ==== QA approved the ${version_release} tag code ===='
+					sh 'echo ==== QA approved the ${VERSION_RELEASE} tag code ===='
 					
 				}
 				else if("${env.inputReleaseStatus}" == "ONLY-TO-SOC")
@@ -76,7 +76,7 @@ pipeline {
                         	{
 					env.releaseVQA='NOT-RELEASED-TO-VQA'
 					sh '''
-					echo "==== QA dqed the ${version_release} tag code ===="
+					echo "==== QA dqed the ${VERSION_RELEASE} tag code ===="
 					exit 1
 					'''
 				}
@@ -92,8 +92,8 @@ pipeline {
                       		"""{
                            		"files": [
                                				{
-                                 				"pattern":"vizio-dallas-megha-test/${version_release}/", 
-                               		  			"target":"${version_release}-ndk_bsp.tar.gz"
+                                 				"pattern":"vizio-dallas-megha-test/${VERSION_RELEASE}/", 
+                               		  			"target":"${VERSION_RELEASE}-ndk_bsp.tar.gz"
 							}
 					]
                         	}""",
