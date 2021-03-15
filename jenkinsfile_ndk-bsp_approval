@@ -106,7 +106,7 @@ pipeline {
                    			    "files": [
                    			            	 {
                    			            	   "pattern": "(*)-ndk_bsp.tar.gz",
-                   			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/ext/"
+                   			              	   "target": "vizio-dallas-megha-test/ext/"
                    			            	 }
                    			             ]
                    		}""",
