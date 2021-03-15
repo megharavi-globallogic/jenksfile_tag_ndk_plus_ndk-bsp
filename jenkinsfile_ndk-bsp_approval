@@ -1,10 +1,11 @@
 pipeline {
 	agent none
     	environment {
-		VERSION_RELEASE = "${params.VERSION_RELEASE}"
+		VERSION_RELEASE = '4.0.435.0'
 		
-		//uploading tag modules to soc
-		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
+		//rt repo paths
+		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/${VERSION_RELEASE}/ext/"
+		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
 	}
 	
 	options {
@@ -30,11 +31,11 @@ pipeline {
 				
 
                 		def userInput = input(
-                            	id: 'userInput', message: 'Enter path of test reports:?',
+                            	id: 'userInput', message: 'Enter the status of approval!',
                             	parameters: [
-				    choice(name: 'RELEASESTATUSQA', 
-				    	    choices: 'DEV-QA-APPROVED\nDEV-QA-DQed\nONLY-TO-SOC', 
-					    description: "Are you releasing ${VERSION_RELEASE} tag modules to SOC?"),
+				    choice(name: 'APPROVALSTATUS?', 
+				    	    choices: 'APPROVED\nDEV-QA-DQed', 
+					    description: "Are you releasing ${VERSION_RELEASE} tag modules to EXTERNAL?"),
                                     string(defaultValue: 'NA',
                                             description: 'List of JIRA NUMBERS for issues found or any notes',
                                             name: 'BUGS')
@@ -42,7 +43,7 @@ pipeline {
                             	])
 
                     		// Save to variables. Default to empty string if not found.
-                    		env.inputReleaseStatus = userInput.RELEASESTATUSQA?:''
+                    		env.inputReleaseStatus = userInput.APPROVALSTATUS?:''
                     		env.inputBUGS = userInput.BUGS?:''
 				
                     
@@ -61,20 +62,15 @@ pipeline {
 				println "====$inputBUGS==="
 				
 				
-				if ("${env.inputReleaseStatus}" == "DEV-QA-APPROVED")
+				if ("${env.inputReleaseStatus}" == "APPROVED")
 				{
-					env.releaseVQA='RELEASED-TO-VQA'
+					env.releaseVQA='APPROVED-TO-EXT'
 					sh 'echo ==== QA approved the ${VERSION_RELEASE} tag code ===='
 					
 				}
-				else if("${env.inputReleaseStatus}" == "ONLY-TO-SOC")
-				{	
-					env.releaseVQA='ONLY-TO-SOC'
-					sh 'echo ==== QA approved Only to SOC ===='
-				}
 				else
                         	{
-					env.releaseVQA='NOT-RELEASED-TO-VQA'
+					env.releaseVQA='DEV-QA-DQed'
 					sh '''
 					echo "==== QA dqed the ${VERSION_RELEASE} tag code ===="
 					exit 1
@@ -92,7 +88,7 @@ pipeline {
                       		"""{
                            		"files": [
                                				{
-                                 				"pattern":"vizio-dallas-megha-test/${VERSION_RELEASE}/", 
+                                 				"pattern":"${vizio_tag_modules_download_artifactory_path}", 
                                		  			"target":"${VERSION_RELEASE}-ndk_bsp.tar.gz"
 							}
 					]
@@ -101,6 +97,25 @@ pipeline {
                 	)
            	}
 	}
+	stage("Upload_Artifacts"){
+		agent any
+		steps {
+                	rtUpload (
+                   	serverId: 'artifactory',
+                   	spec:
+                      		"""{
+                           		"files": [
+                               				{
+                                 				"pattern":"$VERSION_RELEASE-ndk_bsp.tar.gz"
+                               		  			"target":"${vizio_tag_modules_upload_artifactory_path_to_external}"
+							}
+					]
+                        	}""",
+                   		failNoOp: true
+                	)
+           	}
+	}
+	
     }
     post{ 
     	success {
@@ -110,14 +125,14 @@ pipeline {
 					"type": "section",
 					"text": [
 						"type": "mrkdwn",
-						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to soc. click on the link below to downlaod the required code"
+						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to External. click on the link below to download the required code"
 					 ]
 				],
 				[
 					"type": "section",
 					"text": [
 						"type": "mrkdwn",
-						"text": "https://artifactory.vizio.com/ui/repos/tree/General/vizio-dallas-external-ndk-plus-bsp"
+						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
 					 ]
 				]
         		]
