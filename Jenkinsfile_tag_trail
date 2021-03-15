@@ -1,7 +1,7 @@
 pipeline {
 	agent none
     	environment {
-		version_release = "{params.VERSION_RELEASE}"
+		version_release = "${params.VERSION_RELEASE}"
 		
 		//uploading tag modules to soc
 		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${version_release}/"
