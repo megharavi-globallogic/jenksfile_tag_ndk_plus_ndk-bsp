@@ -105,7 +105,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "${VERSION_RELEASE}-ndk_bsp.tar.gz",
+                   			            	   "pattern": "(*)-ndk_bsp.tar.gz",
                    			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/ext/"
                    			            	 }
                    			             ]
