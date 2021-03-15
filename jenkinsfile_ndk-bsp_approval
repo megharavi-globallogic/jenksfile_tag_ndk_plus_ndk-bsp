@@ -88,14 +88,14 @@ pipeline {
                            		"files": [
                                				{
                                  				"pattern":"${vizio_tag_modules_download_artifactory_path}", 
-                               		  			"target":"${VERSION_RELEASE}-ndk_bsp.tar.gz"
+                               		  			"target":"${VERSION_RELEASE}/${VERSION_RELEASE}-ndk_bsp.tar.gz"
 							}
 					]
                         	}""",
                    		failNoOp: true
 				
                 	)
-			sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
+			//sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
            	}
 	}
 	stage("Upload_Artifacts"){
@@ -107,7 +107,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "(*)-ndkbsp.tar.gz",
+                   			            	   "pattern": "${VERSION_RELEASE}/(*)-ndk_bsp.tar.gz",
                    			              	   "target": "vizio-dallas-megha-test/"
                    			            	 }
                    			             ]
