@@ -33,7 +33,7 @@ pipeline {
                 		def userInput = input(
                             	id: 'userInput', message: 'Enter the status of approval!',
                             	parameters: [
-				    choice(name: 'APPROVALSTATUS?', 
+				    choice(name: 'APPROVALSTATUS', 
 				    	    choices: 'APPROVED\nDEV-QA-DQed', 
 					    description: "Are you releasing ${VERSION_RELEASE} tag modules to EXTERNAL?"),
                                     string(defaultValue: 'NA',
@@ -43,7 +43,7 @@ pipeline {
                             	])
 
                     		// Save to variables. Default to empty string if not found.
-                    		env.inputReleaseStatus = userInput.APPROVALSTATUS?:''
+                    		env.inputReleaseStatus = userInput.APPROVALSTATUS:''
                     		env.inputBUGS = userInput.BUGS?:''
 				
                     
