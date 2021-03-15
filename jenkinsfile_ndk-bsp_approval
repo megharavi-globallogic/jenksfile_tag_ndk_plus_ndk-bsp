@@ -96,18 +96,24 @@ pipeline {
                 	)
            	}
 	}
-	rtUpload (
-                   			serverId: 'artifactory',
-                   			spec:
-                   			    """{
-                   			        "files": [
-                   			             {
-                   			               "pattern": "${VERSION_RELEASE}-ndk_bsp.tar.gz",
-                   			               "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/${VERSION_RELEASE}"
-                   			             }
-                   			         ]
-                   			     }"""
-                			)
+	stage("Upload_Artifacts"){
+		agent any
+		steps {
+			rtUpload (
+                   	serverId: 'artifactory',
+                   	spec:
+                   		 """{
+                   			    "files": [
+                   			            	 {
+                   			            	   "pattern": "${VERSION_RELEASE}-ndk_bsp.tar.gz",
+                   			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/${VERSION_RELEASE}"
+                   			            	 }
+                   			             ]
+                   		}"""
+				failNoOp: true
+                	)
+		}
+	}
 	
     }
     post{ 
