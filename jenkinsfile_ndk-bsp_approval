@@ -43,7 +43,7 @@ pipeline {
                             	])
 
                     		// Save to variables. Default to empty string if not found.
-                    		env.inputReleaseStatus = userInput.APPROVALSTATUS:''
+                    		env.inputReleaseStatus = userInput.APPROVALSTATUS?:''
                     		env.inputBUGS = userInput.BUGS?:''
 				
                     
