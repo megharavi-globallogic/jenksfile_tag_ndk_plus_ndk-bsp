@@ -3,8 +3,7 @@ pipeline {
     	environment {
 		VERSION_RELEASE = '4.0.434.0'
 		
-		//rt repo paths
-		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/${VERSION_RELEASE}/ext/"
+		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/ext/"
 		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
 	}
 	
@@ -97,24 +96,18 @@ pipeline {
                 	)
            	}
 	}
-	stage("Upload_Artifacts"){
-		agent any
-		steps {
-                	rtUpload (
-                   	serverId: 'artifactory',
-                   	spec:
-                      		"""{
-                           		"files": [
-                               				{
-                                 				"pattern":"${VERSION_RELEASE}-ndk_bsp.tar.gz"
-                               		  			"target":"${vizio_tag_modules_upload_artifactory_path_to_external}"
-							}
-					]
-                        	}""",
-                   		failNoOp: true
-                	)
-           	}
-	}
+	rtUpload (
+                   			serverId: 'artifactory',
+                   			spec:
+                   			    """{
+                   			        "files": [
+                   			             {
+                   			               "pattern": "${VERSION_RELEASE}-ndk_bsp.tar.gz",
+                   			               "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/${VERSION_RELEASE}"
+                   			             }
+                   			         ]
+                   			     }"""
+                			)
 	
     }
     post{ 
