@@ -1,7 +1,7 @@
 pipeline {
 	agent none
     	environment {
-		VERSION_RELEASE = '4.0.434.0'
+		VERSION_RELEASE = '${params.VERSION_RELEASE}'
 		
 		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/"
 		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
