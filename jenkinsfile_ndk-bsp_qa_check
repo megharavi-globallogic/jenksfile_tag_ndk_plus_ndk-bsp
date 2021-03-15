@@ -4,7 +4,7 @@ pipeline {
 		VERSION_RELEASE = "${params.VERSION_RELEASE}"
 		
 		//uploading tag modules to soc
-		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/$VERSION_RELEASE/"
+		vizio_tag_modules_upload_artifactory_path_to_soc = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
 	}
 	
 	options {
@@ -15,7 +15,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "$VERSION_RELEASE"
+                    		currentBuild.displayName = "${VERSION_RELEASE}"
                 	}
             	}
         }
