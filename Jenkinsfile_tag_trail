@@ -32,7 +32,7 @@ pipeline {
                 		def userInput = input(
                             	id: 'userInput', message: 'Enter path of test reports:?',
                             	parameters: [
-				    choice(name: 'RELEASE_STATUS_QA', 
+				    choice(name: 'RELEASESTATUSQA', 
 				    	    choices: 'DEV-QA-APPROVED\nDEV-QA-DQed\nONLY-TO-SOC', 
 					    description: "Are you releasing ${version_release} tag modules to SOC?"),
                                     string(defaultValue: 'NA',
@@ -64,19 +64,19 @@ pipeline {
 				if ("${env.inputReleaseStatus}" == "DEV-QA-APPROVED")
 				{
 					env.releaseVQA='RELEASED-TO-VQA'
-					sh 'echo ==== QA approved the ${version_release} tag code'
+					sh 'echo ==== QA approved the ${version_release} tag code ===='
 					
 				}
 				else if("${env.inputReleaseStatus}" == "ONLY-TO-SOC")
 				{	
 					env.releaseVQA='ONLY-TO-SOC'
-					sh 'echo ==== QA approved Only to SOC'
+					sh 'echo ==== QA approved Only to SOC ===='
 				}
 				else
                         	{
 					env.releaseVQA='NOT-RELEASED-TO-VQA'
 					sh '''
-					echo "==== QA dqed the ${version_release} tag code"
+					echo "==== QA dqed the ${version_release} tag code ===="
 					exit 1
 					'''
 				}
