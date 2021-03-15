@@ -94,8 +94,9 @@ pipeline {
 					]
                         	}""",
                    		failNoOp: true
-				sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
+				
                 	)
+			sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
            	}
 	}
 	stage("Upload_Artifacts"){
