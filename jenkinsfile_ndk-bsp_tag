@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	VERSION_RELEASE='4.0.434.0'
+	VERSION_RELEASE='4.0.435.0'
 	}
 	
   	stages {
@@ -15,7 +15,7 @@ pipeline {
 						{
                                        			 sh '''
 								
-								rm -rf *
+								rm -rf vizio_ndk_bsp
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								cd vizio_ndk_bsp/ndk
 								git submodule init
@@ -66,4 +66,37 @@ pipeline {
 		}
 		
 	}
+	post{ 
+    	success {
+		script {
+			def success_attc = [ 
+				[
+					"type": "divider"
+				],
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
+					]
+				],
+				[
+					"type": "divider"
+				],
+				[
+					"type": "section",
+					"fields": slackobj
+				],
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": "<ext/repo/path|Click here to goto the repo >"
+					]
+				]
+            		]
+			//slackSend (attachments: success_attachment, channel: "${slack_notification}")		
+			
+		//Triggring Approval pipeline
+		build job: "ndk-bsp_approval", wait: false, parameters: [ string(name: 'VERSION_RELEASE', value: "${VERSION_RELEASE}")]
 }
