@@ -15,7 +15,6 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-				sh ' sudo rm -rf *'
                     		currentBuild.displayName = "${VERSION_RELEASE}"
                 	}
             	}
