@@ -3,7 +3,7 @@ pipeline {
     	environment {
 		VERSION_RELEASE = '4.0.434.0'
 		
-		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/ext/"
+		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/"
 		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
 	}
 	
@@ -106,7 +106,7 @@ pipeline {
                    			    "files": [
                    			            	 {
                    			            	   "pattern": "${VERSION_RELEASE}-ndk_bsp.tar.gz",
-                   			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/${VERSION_RELEASE}"
+                   			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/ext/${VERSION_RELEASE}"
                    			            	 }
                    			             ]
                    		}""",
