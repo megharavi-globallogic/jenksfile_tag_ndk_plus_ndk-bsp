@@ -15,7 +15,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "${VERSION_RELEASE}"
+                    		currentBuild.displayName = "$VERSION_RELEASE"
                 	}
             	}
         }
