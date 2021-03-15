@@ -1,7 +1,7 @@
 pipeline {
 	agent none
     	environment {
-		VERSION_RELEASE = '4.0.435.0'
+		VERSION_RELEASE = '4.0.434.0'
 		
 		//rt repo paths
 		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/${VERSION_RELEASE}/ext/"
