@@ -96,7 +96,9 @@ pipeline {
 				]
             		]
 			//slackSend (attachments: success_attachment, channel: "${slack_notification}")		
-			
 		//Triggring Approval pipeline
 		build job: "ndk-bsp_approval", wait: false, parameters: [ string(name: 'VERSION_RELEASE', value: "${VERSION_RELEASE}")]
+		}
+	}
+	}
 }
