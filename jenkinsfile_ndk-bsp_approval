@@ -109,7 +109,7 @@ pipeline {
                    			              	   "target": "${vizio_tag_modules_upload_artifactory_path_to_external}/${VERSION_RELEASE}"
                    			            	 }
                    			             ]
-                   		}"""
+                   		}""",
 				failNoOp: true
                 	)
 		}
