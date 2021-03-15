@@ -14,7 +14,7 @@ pipeline {
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                                        			 sh '''
-								set -x
+								
 								rm -rf *
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								cd vizio_ndk_bsp/ndk
