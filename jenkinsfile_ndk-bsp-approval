@@ -6,7 +6,7 @@ pipeline {
 	
 	environment{
 	//version_release = "${params.version_release}"
-	version_release = "4.0.439.0"
+	version_release = "4.0.438.0"
 	//vizio_tag_modules_download_artifactory_path="vizio-dallas-megha-test"
 	slack_notification = "sdk_discussion"
 	}
