@@ -127,7 +127,7 @@ pipeline {
 		script {
 			def success_attc = [
 				[	 
-					text: "*<@W011ASRJTFH>Successfully uploaded the ndk_plus_bsp ${version_release} tag file to External.
+					text: "Successfully uploaded the ndk_plus_bsp ${version_release} tag file to External.
 					color: "#00ff00"
 				]
         		]
