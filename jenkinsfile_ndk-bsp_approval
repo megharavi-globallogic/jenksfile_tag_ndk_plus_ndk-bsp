@@ -1,11 +1,9 @@
 pipeline {
 	agent none
-    	environment {
-		version_release_param = '${params.VERSION_RELEASE}'
-		
-		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/"
-		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
-	}
+	
+	parameters {
+    		string(name: 'VERSION_RELEASE',defaultValue: '')
+  	}
 	
 	options {
         timeout(time: 7, unit: 'DAYS')
@@ -15,129 +13,9 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "${version_release_param}"
+                    		currentBuild.displayName = "${params.VERSION_RELEASE}"
                 	}
             	}
         }
 	
-    	stage('QA Approval') {
-		agent none
-            	steps {
-                	script {
-                		println "${version_release_param}"
-                   		def inputReleaseStatus
-                    		def inputBUGS
-				
-
-                		def userInput = input(
-                            	id: 'userInput', message: 'Enter the status of approval!',
-                            	parameters: [
-				    choice(name: 'APPROVALSTATUS', 
-				    	    choices: 'APPROVED\nDEV-QA-DQed', 
-					    description: "Are you releasing ${version_release_param} tag modules to EXTERNAL?"),
-                                    string(defaultValue: 'NA',
-                                            description: 'List of JIRA NUMBERS for issues found or any notes',
-                                            name: 'BUGS')
-				  
-                            	])
-
-                    		// Save to variables. Default to empty string if not found.
-                    		env.inputReleaseStatus = userInput.APPROVALSTATUS?:''
-                    		env.inputBUGS = userInput.BUGS?:''
-				
-                    
-                    		println "$inputReleaseStatus"
-                    		println "$inputBUGS"
-			}
-                	
-        	}
-	}
-	stage("Delete_Artifacts"){
-		agent any
-		steps {
-        		script {
-			
-				env.inputBUGS=sh (script: "echo $inputBUGS | sed 's/ /\\ /g'", returnStdout: true).trim()
-				println "====$inputBUGS==="
-				
-				
-				if ("${env.inputReleaseStatus}" == "APPROVED")
-				{
-					env.releaseVQA='APPROVED-TO-EXT'
-					sh 'echo ==== QA approved the ${version_release_param} tag code ===='
-					
-				}
-				else
-                        	{
-					env.releaseVQA='DEV-QA-DQed'
-					sh '''
-					echo "==== QA dqed the ${version_release_param} tag code ===="
-					exit 1
-					'''
-				}
-			}
-		}
-	}
-	stage("Download_Artifacts"){
-		agent any
-		steps {
-                	rtDownload (
-                   	serverId: 'artifactory',
-                   	spec:
-                      		"""{
-                           		"files": [
-                               				{
-                                 				"pattern":"${vizio_tag_modules_download_artifactory_path}", 
-                               		  			"target":"${version_release_param}/${version_release_param}-ndk_bsp.tar.gz"
-							}
-					]
-                        	}""",
-                   		failNoOp: true
-				
-                	)
-			//sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${version_release_param}-ndkbsp.tar.gz'
-           	}
-	}
-	stage("Upload_Artifacts"){
-		agent any
-		steps {
-			rtUpload (
-                   	serverId: 'artifactory',
-                   	spec:
-                   		 """{
-                   			    "files": [
-                   			            	 {
-                   			            	   "pattern": "${version_release_param}/(*)-ndk_bsp.tar.gz",
-                   			              	   "target": "vizio-dallas-megha-test/"
-                   			            	 }
-                   			             ]
-                   		}""",
-				failNoOp: true
-                	)
-		}
-	}
-	
-    }
-    post{ 
-    	success {
-		script {
-			def success_attc = [
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to External. click on the link below to download the required code"
-					 ]
-				],
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
-					 ]
-				]
-        		]
-      		}
-    	}
-   }
 }
