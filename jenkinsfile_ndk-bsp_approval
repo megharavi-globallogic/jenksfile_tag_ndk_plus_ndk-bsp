@@ -96,7 +96,6 @@ pipeline {
                    		failNoOp: true
 				
                 	)
-			//sh ' sudo mv ${version_release}-ndk_bsp.tar.gz ${version_release}-ndkbsp.tar.gz'
            	}
 	}
 	stage("Upload_Artifacts"){
