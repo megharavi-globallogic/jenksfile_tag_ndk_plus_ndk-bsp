@@ -85,10 +85,6 @@ pipeline {
 				],
 				[
 					"type": "section",
-					"fields": slackobj
-				],
-				[
-					"type": "section",
 					"text": [
 						"type": "mrkdwn",
 						"text": "<ext/repo/path|Click here to goto the repo >"
