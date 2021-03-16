@@ -8,7 +8,7 @@ pipeline {
 	//get version from upstream job ndk-bsp-tag
 	//version_release = "${params.version_release}"
 	
-	version_release = "4.0.442.0"
+	version_release = "4.0.435.0"
 	
 	//artifactory paths
 	vizio_tag_modules_download_path = "vizio-dallas-megha-test"
