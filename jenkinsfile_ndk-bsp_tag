@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	VERSION_RELEASE='4.0.436.0'
+	VERSION_RELEASE='4.0.438.0'
 	}
 	
   	stages {
@@ -34,7 +34,7 @@ pipeline {
 				cd vizio_ndk_bsp/ndk/public
 				rm -rf .git .gitignore
 				cd ../../..
-				tar -czvf $VERSION_RELEASE-ndk_bsp.tar.gz vizio_ndk_bsp
+				tar -czvf $VERSION_RELEASE-ndk-bsp.tar.gz vizio_ndk_bsp
 				'''
 			}
 		}
@@ -47,7 +47,7 @@ pipeline {
                        	 	    """{
                            		"files": [
 						{
-                               		   	"pattern": "(*)-ndk_bsp.tar.gz",
+                               		   	"pattern": "${VERSION_RELEASE}-ndk-bsp.tar.gz",
                                		  	"target": "vizio-dallas-megha-test/${VERSION_RELEASE}/"    
                               			}
                            			]
@@ -55,40 +55,14 @@ pipeline {
               			)
            		}
 		}
-		stage ('Starting downstream job ') {
-  			steps {
-    				build job: 'ndk-bsp_approval', parameters: [string(name: 'version_release', value: "${VERSION_RELEASE}")], propagate: false
- 			}
-		}
 	}
+	
 	post{ 
     	success {
 		script {
-			def success_attc = [ 
-				[
-					"type": "divider"
-				],
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
-					]
-				],
-				[
-					"type": "divider"
-				],
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": "<ext/repo/path|Click here to goto the repo >"
-					]
-				]
-            		]
-			//slackSend (attachments: success_attachment, channel: "${slack_notification}")		
+		//slackSend (attachments: success_attachment, channel: "${slack_notification}")		
 		//Triggring Approval pipeline
-		//build job: "ndk-bsp_approval", wait: false, parameters: [ string(name: 'VERSION_RELEASE', value: "${VERSION_RELEASE}")]
+		build job: 'ndk-bsp_approval', parameters: [string(name: 'version_release', value: "${VERSION_RELEASE}")], propagate: false
 		}
 	}
 	}
