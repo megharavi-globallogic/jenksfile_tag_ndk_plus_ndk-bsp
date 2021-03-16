@@ -1,16 +1,14 @@
 pipeline {
 	agent none
-	
-	
-	
-	
 	//parameters {
     	//	string(name: 'version_release', defaultValue: '4.0.438.0', description: 'enter tag?')
   	//}
 	
 	environment{
-	version_release = "${params.version_release}"
+	//version_release = "${params.version_release}"
+	version_release = "4.0.439.0"
 	//vizio_tag_modules_download_artifactory_path="vizio-dallas-megha-test"
+	slack_notification = "sdk_discussion"
 	}
 	
 	options {
@@ -93,7 +91,8 @@ pipeline {
                            		"files": [
                                				{
                                  				"pattern":"vizio-dallas-megha-test/${version_release}/${version_release}-ndk-bsp.tar.gz",
-                               		  			"target":"${version_release}/"
+                               		  			"target":"./",
+								"flat":"true"
 							}
 					]
                         	}""",
@@ -112,7 +111,8 @@ pipeline {
                    			    "files": [
                    			            	 {
                    			            	   "pattern": "${version_release}/${version_release}-ndk-bsp.tar.gz",
-                   			              	   "target": "vizio-dallas-megha-test/ext/"
+                   			              	   "target": "vizio-dallas-megha-test/ext",
+							   "flat":"true"
                    			            	 }
                    			             ]
                    		}""",
@@ -126,12 +126,9 @@ pipeline {
     	success {
 		script {
 			def success_attc = [
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to External. click on the link below to download the required code"
-					 ]
+				[	 
+					text: "*<@W011ASRJTFH>Successfully uploaded the ndk_plus_bsp ${version_release} tag file to External.
+					color: "#00ff00"
 				]
         		]
       		}
