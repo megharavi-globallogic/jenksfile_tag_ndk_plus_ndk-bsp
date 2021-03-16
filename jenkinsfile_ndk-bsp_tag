@@ -5,6 +5,7 @@ pipeline {
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
 	VERSION_RELEASE='4.0.436.0'
 	}
+	
   	stages {
 		stage('Clone ndk & ndk_bsp tags') {
 			 steps {
@@ -12,7 +13,7 @@ pipeline {
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
 						{
                                        			 sh '''
-								rm -rf vizio_ndk_bsp
+								rm -rf *
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								cd vizio_ndk_bsp/ndk
 								git submodule init
