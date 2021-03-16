@@ -2,7 +2,7 @@ pipeline {
 	agent none
 	
 	parameters {
-    		string(name: 'VERSION_RELEASE',defaultValue: '')
+    		string(name: 'VERSION_RELEASE', defaultValue: 'hello; ls /', description: 'What should I say?')
   	}
 	
 	options {
