@@ -64,7 +64,12 @@ pipeline {
               			)
            		}
 		}
-		
+	
+		stage ('Starting downstream job ') {
+  			steps {
+    				build job: 'ndk-bsp_approval', parameters: [string(name: 'VERSION_RELEASE', value: '${VERSION_RELEASE}')], propagate: false
+ 			}
+		}
 	}
 	post{ 
     	success {
@@ -93,7 +98,7 @@ pipeline {
             		]
 			//slackSend (attachments: success_attachment, channel: "${slack_notification}")		
 		//Triggring Approval pipeline
-		build job: "ndk-bsp_approval", wait: false, parameters: [ string(name: 'VERSION_RELEASE', value: "${VERSION_RELEASE}")]
+		//build job: "ndk-bsp_approval", wait: false, parameters: [ string(name: 'VERSION_RELEASE', value: "${VERSION_RELEASE}")]
 		}
 	}
 	}
