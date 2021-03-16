@@ -88,7 +88,7 @@ pipeline {
                       		"""{
                            		"files": [
                                				{
-                                 				"pattern":"vizio-dallas-megha-test/${version_release}/${version_release}-ndk_bsp.tar.gz"
+                                 				"pattern":"vizio-dallas-megha-test/${version_release}/${version_release}-ndk-bsp.tar.gz"
                                		  			"target":"${version_release}/"
 							}
 					]
@@ -108,7 +108,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "${version_release}/${version_release}-ndk_bsp.tar.gz",
+                   			            	   "pattern": "${version_release}/${version_release}-ndk-bsp.tar.gz",
                    			              	   "target": "vizio-dallas-megha-test/ext/"
                    			            	 }
                    			             ]
