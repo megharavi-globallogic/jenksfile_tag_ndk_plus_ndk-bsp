@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	VERSION_RELEASE='4.0.435.0'
+	VERSION_RELEASE='4.0.436.0'
 	}
 	
   	stages {
