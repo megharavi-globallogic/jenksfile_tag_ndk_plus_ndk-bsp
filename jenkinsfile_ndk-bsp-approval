@@ -147,10 +147,9 @@ pipeline {
     					text: "Failed to upload ndk_plus_bsp ${version_release} tag file to External."
 					color: "#00ff00"
   				]
-				]
+			]
           			slackSend (attachments: attachments_failed, channel: "${slack_notification}")
-			}
-       		}
-	}*/
-   }
+		}
+	}
+     }*/
 }
