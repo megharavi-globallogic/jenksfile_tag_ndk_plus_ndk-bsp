@@ -88,7 +88,7 @@ pipeline {
                       		"""{
                            		"files": [
                                				{
-                                 				"pattern":"${vizio_tag_modules_download_artifactory_path}/tag/", 
+                                 				"pattern":"${vizio_tag_modules_download_artifactory_path}", 
                                		  			"target":"${version_release}/${version_release}-ndk_bsp.tar.gz"
 							}
 					]
