@@ -51,7 +51,8 @@ pipeline {
                                		  	"target": "vizio-dallas-megha-test/${VERSION_RELEASE}/"    
                               			}
                            			]
-                       		   }"""
+                       		   }""",
+				   failNoOp: true
               			)
            		}
 		}
