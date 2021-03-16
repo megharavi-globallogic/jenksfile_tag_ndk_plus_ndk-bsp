@@ -6,9 +6,9 @@ pipeline {
 	
 	environment{
 	//get version from upstream job ndk-bsp-tag
-	version_release = "${params.version_release}"
+	//version_release = "${params.version_release}"
 	
-	//version_release = "4.0.438.0"
+	version_release = "4.0.442.0"
 	
 	//artifactory paths
 	vizio_tag_modules_download_path = "vizio-dallas-megha-test"
@@ -61,32 +61,7 @@ pipeline {
                 	
         	}
 	}
-	stage("Delete_Artifacts"){
-		agent any
-		steps {
-        		script {
-			
-				env.inputBUGS=sh (script: "echo $inputBUGS | sed 's/ /\\ /g'", returnStdout: true).trim()
-				println "====$inputBUGS==="
-				
-				
-				if ("${env.inputReleaseStatus}" == "APPROVED")
-				{
-					env.releaseVQA='APPROVED-TO-EXT'
-					sh 'echo ==== QA approved the ${version_release} tag code ===='
-					
-				}
-				else
-                        	{
-					env.releaseVQA='DEV-QA-DQed'
-					sh '''
-					echo "==== QA dqed the ${version_release} tag code ===="
-					exit 1
-					'''
-				}
-			}
-		}
-	}
+	
 	stage("Download_Artifacts"){
 		agent any
 		steps {
@@ -124,6 +99,7 @@ pipeline {
                    		}""",
 				failNoOp: true
                 	)
+			sh 'rm -rf ${version_release}-ndk-bsp.tar.gz'
 		}
 	}
 	
