@@ -1,7 +1,7 @@
 pipeline {
 	agent none
     	environment {
-		VERSION_RELEASE = '${params.VERSION_RELEASE}'
+		version_release_param = '${params.VERSION_RELEASE}'
 		
 		vizio_tag_modules_upload_artifactory_path_to_external = "vizio-dallas-megha-test/"
 		vizio_tag_modules_download_artifactory_path = "vizio-dallas-megha-test/${VERSION_RELEASE}/"
@@ -15,7 +15,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "${VERSION_RELEASE}"
+                    		currentBuild.displayName = "${version_release_param}"
                 	}
             	}
         }
@@ -24,7 +24,7 @@ pipeline {
 		agent none
             	steps {
                 	script {
-                		println "${VERSION_RELEASE}"
+                		println "${version_release_param}"
                    		def inputReleaseStatus
                     		def inputBUGS
 				
@@ -34,7 +34,7 @@ pipeline {
                             	parameters: [
 				    choice(name: 'APPROVALSTATUS', 
 				    	    choices: 'APPROVED\nDEV-QA-DQed', 
-					    description: "Are you releasing ${VERSION_RELEASE} tag modules to EXTERNAL?"),
+					    description: "Are you releasing ${version_release_param} tag modules to EXTERNAL?"),
                                     string(defaultValue: 'NA',
                                             description: 'List of JIRA NUMBERS for issues found or any notes',
                                             name: 'BUGS')
@@ -64,14 +64,14 @@ pipeline {
 				if ("${env.inputReleaseStatus}" == "APPROVED")
 				{
 					env.releaseVQA='APPROVED-TO-EXT'
-					sh 'echo ==== QA approved the ${VERSION_RELEASE} tag code ===='
+					sh 'echo ==== QA approved the ${version_release_param} tag code ===='
 					
 				}
 				else
                         	{
 					env.releaseVQA='DEV-QA-DQed'
 					sh '''
-					echo "==== QA dqed the ${VERSION_RELEASE} tag code ===="
+					echo "==== QA dqed the ${version_release_param} tag code ===="
 					exit 1
 					'''
 				}
@@ -88,14 +88,14 @@ pipeline {
                            		"files": [
                                				{
                                  				"pattern":"${vizio_tag_modules_download_artifactory_path}", 
-                               		  			"target":"${VERSION_RELEASE}/${VERSION_RELEASE}-ndk_bsp.tar.gz"
+                               		  			"target":"${version_release_param}/${version_release_param}-ndk_bsp.tar.gz"
 							}
 					]
                         	}""",
                    		failNoOp: true
 				
                 	)
-			//sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${VERSION_RELEASE}-ndkbsp.tar.gz'
+			//sh ' sudo mv ${VERSION_RELEASE}-ndk_bsp.tar.gz ${version_release_param}-ndkbsp.tar.gz'
            	}
 	}
 	stage("Upload_Artifacts"){
@@ -107,7 +107,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "${VERSION_RELEASE}/(*)-ndk_bsp.tar.gz",
+                   			            	   "pattern": "${version_release_param}/(*)-ndk_bsp.tar.gz",
                    			              	   "target": "vizio-dallas-megha-test/"
                    			            	 }
                    			             ]
