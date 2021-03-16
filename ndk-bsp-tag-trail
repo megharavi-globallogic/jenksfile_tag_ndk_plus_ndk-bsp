@@ -16,7 +16,7 @@ pipeline {
 								set -x
 								rm -rf *
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
-								rm -rf vizio_ndk_bsp/ndk
+								rm -rf vizio_ndk_bsp/ndk/
 								cd vizio_ndk_bsp
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/ndk.git
 								rm -rf  .git  .gitattributes  .gitignore  .gitmodules
