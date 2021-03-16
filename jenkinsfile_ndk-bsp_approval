@@ -25,7 +25,7 @@ pipeline {
 		agent none
             	steps {
                 	script {
-                		println "${params.version_release}"
+                		println "${version_release}"
                    		def inputReleaseStatus
                     		def inputBUGS
 				
@@ -35,7 +35,7 @@ pipeline {
                             	parameters: [
 				    choice(name: 'APPROVALSTATUS', 
 				    	    choices: 'APPROVED\nDEV-QA-DQed', 
-					    description: "Are you releasing ${params.version_release} tag modules to EXTERNAL?"),
+					    description: "Are you releasing ${version_release} tag modules to EXTERNAL?"),
                                     string(defaultValue: 'NA',
                                             description: 'List of JIRA NUMBERS for issues found or any notes',
                                             name: 'BUGS')
@@ -65,14 +65,14 @@ pipeline {
 				if ("${env.inputReleaseStatus}" == "APPROVED")
 				{
 					env.releaseVQA='APPROVED-TO-EXT'
-					sh 'echo ==== QA approved the ${params.version_release} tag code ===='
+					sh 'echo ==== QA approved the ${version_release} tag code ===='
 					
 				}
 				else
                         	{
 					env.releaseVQA='DEV-QA-DQed'
 					sh '''
-					echo "==== QA dqed the ${params.version_release} tag code ===="
+					echo "==== QA dqed the ${version_release} tag code ===="
 					exit 1
 					'''
 				}
@@ -89,14 +89,14 @@ pipeline {
                            		"files": [
                                				{
                                  				"pattern":"${vizio_tag_modules_download_artifactory_path}/tag/", 
-                               		  			"target":"${params.version_release}/${params.version_release}-ndk_bsp.tar.gz"
+                               		  			"target":"${version_release}/${version_release}-ndk_bsp.tar.gz"
 							}
 					]
                         	}""",
                    		failNoOp: true
 				
                 	)
-			//sh ' sudo mv ${params.version_release}-ndk_bsp.tar.gz ${params.version_release}-ndkbsp.tar.gz'
+			//sh ' sudo mv ${version_release}-ndk_bsp.tar.gz ${version_release}-ndkbsp.tar.gz'
            	}
 	}
 	stage("Upload_Artifacts"){
@@ -108,7 +108,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "${params.version_release}/${params.version_release}-ndk_bsp.tar.gz",
+                   			            	   "pattern": "${version_release}/${version_release}-ndk_bsp.tar.gz",
                    			              	   "target": "vizio-dallas-megha-test/ext/"
                    			            	 }
                    			             ]
