@@ -32,9 +32,9 @@ pipeline {
 				cd vizio_ndk_bsp
 				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
 				cd ..
-				cd vizio_ndk_bsp/ndk/public
+				cd vizio_ndk_bsp/ndk/
 				rm -rf .git .gitignore
-				cd ../../..
+				cd ../..
 				tar -czvf $VERSION_RELEASE-ndk-bsp.tar.gz vizio_ndk_bsp
 				'''
 			}
