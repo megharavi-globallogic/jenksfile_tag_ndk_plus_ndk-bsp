@@ -2,7 +2,7 @@ pipeline {
 	agent none
 	
 	parameters {
-    		string(name: 'VERSION_RELEASE', defaultValue: 'hello; ls /', description: 'What should I say?')
+    		string(name: 'version_release', defaultValue: '', description: 'enter tag?')
   	}
 	
 	options {
@@ -13,7 +13,7 @@ pipeline {
     	stage("Set version name"){
         	steps {
                 	script {
-                    		currentBuild.displayName = "${params.VERSION_RELEASE}"
+                    		currentBuild.displayName = "${params.version_release}"
                 	}
             	}
         }
