@@ -116,7 +116,7 @@ pipeline {
                    		 """{
                    			    "files": [
                    			            	 {
-                   			            	   "pattern": "${version_release}/${version_release}-ndk-bsp.tar.gz",
+                   			            	   "pattern": "${version_release}-ndk-bsp.tar.gz",
                    			              	   "target": "vizio-dallas-megha-test/ext",
 							   "flat":"true"
                    			            	 }
