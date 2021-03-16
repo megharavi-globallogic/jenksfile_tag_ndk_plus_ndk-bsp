@@ -129,18 +129,9 @@ pipeline {
 						"type": "mrkdwn",
 						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to External. click on the link below to download the required code"
 					 ]
-				],
-				[
-					"type": "section",
-					"text": [
-						"type": "mrkdwn",
-						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
-					 ]
 				]
         		]
       		}
     	}
    }
-    }
-	
 }
