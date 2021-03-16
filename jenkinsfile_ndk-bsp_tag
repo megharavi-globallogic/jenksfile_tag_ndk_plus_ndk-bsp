@@ -7,7 +7,7 @@ pipeline {
 	}
 	
   	stages {
-		stage('Clone ndk & ndk_bsp tags') {
+		stage('Clone ndk-bsp') {
 			 steps {
 				 script {
 						withCredentials([sshUserPrivateKey(credentialsId: 'git-vizio-ndk-bsp', keyFileVariable: '', passphraseVariable: '', usernameVariable: '')]) 
@@ -38,7 +38,7 @@ pipeline {
 				'''
 			}
 		}
-		stage('Upload ndk&ndk_bsp tar to artifactory') {
+		stage('Upload ndk-bsp to artifactory') {
             		steps {
 				//uploading to the tar file to the artifactory
                 		rtUpload (
