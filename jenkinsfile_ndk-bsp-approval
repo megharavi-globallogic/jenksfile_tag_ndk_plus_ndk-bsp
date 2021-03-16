@@ -5,9 +5,15 @@ pipeline {
   	//}
 	
 	environment{
-	//version_release = "${params.version_release}"
-	version_release = "4.0.438.0"
-	//vizio_tag_modules_download_artifactory_path="vizio-dallas-megha-test"
+	//get version from upstream job ndk-bsp-tag
+	version_release = "${params.version_release}"
+	
+	//version_release = "4.0.438.0"
+	
+	//artifactory paths
+	vizio_tag_modules_download_path="vizio-dallas-megha-test"
+	vizio_tag_modules_upload_to_external
+	
 	slack_notification = "sdk_discussion"
 	}
 	
