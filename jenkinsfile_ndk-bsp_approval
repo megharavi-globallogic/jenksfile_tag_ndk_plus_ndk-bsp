@@ -1,13 +1,17 @@
 pipeline {
 	agent none
 	
-	parameters {
-    		string(name: 'version_release', defaultValue: '4.0.438.0', description: 'enter tag?')
-  	}
 	
-	//environment{
+	
+	
+	//parameters {
+    	//	string(name: 'version_release', defaultValue: '4.0.438.0', description: 'enter tag?')
+  	//}
+	
+	environment{
+	version_release = "${params.version_release}"
 	//vizio_tag_modules_download_artifactory_path="vizio-dallas-megha-test"
-	//}
+	}
 	
 	options {
         timeout(time: 7, unit: 'DAYS')
@@ -88,7 +92,7 @@ pipeline {
                       		"""{
                            		"files": [
                                				{
-                                 				"pattern":"vizio-dallas-megha-test/${version_release}/${version_release}-ndk-bsp.tar.gz"
+                                 				"pattern":"vizio-dallas-megha-test/${version_release}/${version_release}-ndk-bsp.tar.gz",
                                		  			"target":"${version_release}/"
 							}
 					]
