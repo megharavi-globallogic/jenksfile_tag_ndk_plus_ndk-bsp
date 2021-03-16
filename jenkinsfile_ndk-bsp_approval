@@ -5,6 +5,10 @@ pipeline {
     		string(name: 'version_release', defaultValue: '', description: 'enter tag?')
   	}
 	
+	environmennt{
+	vizio_tag_modules_download_artifactory_path="{vizio-dallas-megha-test/}"
+	}
+	
 	options {
         timeout(time: 7, unit: 'DAYS')
     	}
@@ -17,6 +21,126 @@ pipeline {
                 	}
             	}
         }
+	stage('QA Approval') {
+		agent none
+            	steps {
+                	script {
+                		println "${params.version_release}"
+                   		def inputReleaseStatus
+                    		def inputBUGS
+				
+
+                		def userInput = input(
+                            	id: 'userInput', message: 'Enter the status of approval!',
+                            	parameters: [
+				    choice(name: 'APPROVALSTATUS', 
+				    	    choices: 'APPROVED\nDEV-QA-DQed', 
+					    description: "Are you releasing ${params.version_release} tag modules to EXTERNAL?"),
+                                    string(defaultValue: 'NA',
+                                            description: 'List of JIRA NUMBERS for issues found or any notes',
+                                            name: 'BUGS')
+				  
+                            	])
+
+                    		// Save to variables. Default to empty string if not found.
+                    		env.inputReleaseStatus = userInput.APPROVALSTATUS?:''
+                    		env.inputBUGS = userInput.BUGS?:''
+				
+                    
+                    		println "$inputReleaseStatus"
+                    		println "$inputBUGS"
+			}
+                	
+        	}
+	}
+	stage("Delete_Artifacts"){
+		agent any
+		steps {
+        		script {
+			
+				env.inputBUGS=sh (script: "echo $inputBUGS | sed 's/ /\\ /g'", returnStdout: true).trim()
+				println "====$inputBUGS==="
+				
+				
+				if ("${env.inputReleaseStatus}" == "APPROVED")
+				{
+					env.releaseVQA='APPROVED-TO-EXT'
+					sh 'echo ==== QA approved the ${params.version_release} tag code ===='
+					
+				}
+				else
+                        	{
+					env.releaseVQA='DEV-QA-DQed'
+					sh '''
+					echo "==== QA dqed the ${params.version_release} tag code ===="
+					exit 1
+					'''
+				}
+			}
+		}
+	}
+	stage("Download_Artifacts"){
+		agent any
+		steps {
+                	rtDownload (
+                   	serverId: 'artifactory',
+                   	spec:
+                      		"""{
+                           		"files": [
+                               				{
+                                 				"pattern":"${vizio_tag_modules_download_artifactory_path}/tag/", 
+                               		  			"target":"${params.version_release}/${params.version_release}-ndk_bsp.tar.gz"
+							}
+					]
+                        	}""",
+                   		failNoOp: true
+				
+                	)
+			//sh ' sudo mv ${params.version_release}-ndk_bsp.tar.gz ${params.version_release}-ndkbsp.tar.gz'
+           	}
+	}
+	stage("Upload_Artifacts"){
+		agent any
+		steps {
+			rtUpload (
+                   	serverId: 'artifactory',
+                   	spec:
+                   		 """{
+                   			    "files": [
+                   			            	 {
+                   			            	   "pattern": "${params.version_release}/${params.version_release}-ndk_bsp.tar.gz",
+                   			              	   "target": "vizio-dallas-megha-test/ext/"
+                   			            	 }
+                   			             ]
+                   		}""",
+				failNoOp: true
+                	)
+		}
+	}
+	
+    }
+    post{ 
+    	success {
+		script {
+			def success_attc = [
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": "successfully uploaded the ndk_plus_bsp ${version_release} tag file to External. click on the link below to download the required code"
+					 ]
+				],
+				[
+					"type": "section",
+					"text": [
+						"type": "mrkdwn",
+						"text": ":small_blue_diamond: :sparkles: *Released Tag: ${VERSION_RELEASE}* :sparkles: :small_blue_diamond:"
+					 ]
+				]
+        		]
+      		}
+    	}
+   }
     }
 	
 }
