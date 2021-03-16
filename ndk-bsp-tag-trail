@@ -3,7 +3,7 @@ pipeline {
 	
 	environment{
 	//insert the respective tag number for ndk repo to get the required code,ndk - 'git-vizio-ndk-bsp' - "$VERSION_RELEASE" / 'git-ndk' - "$VERSION_RELEASE"
-	VERSION_RELEASE='4.0.440.0'
+	VERSION_RELEASE='4.0.441.0'
 	}
 	
   	stages {
@@ -18,27 +18,19 @@ pipeline {
 								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/vizio_ndk_bsp.git
 								rm -rf vizio_ndk_bsp/ndk
 								cd vizio_ndk_bsp
-								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/ndk.git	
+								git clone --branch ${VERSION_RELEASE} git@github.com:BuddyTV/ndk.git
+								rm -rf  .git  .gitattributes  .gitignore  .gitmodules
+								cd ndk
+								rm -rf .git .gitignore
+								cd ../..
+								tar -czvf $VERSION_RELEASE-ndk-bsp.tar.gz vizio_ndk_bsp	
 							'''
                                        		}
 				 }
 				 
 			 }
 		 }
-		stage("pack the files") {
-			steps{
-				//creating a tar file for the requested tag number
-				sh ''' 
-				cd vizio_ndk_bsp
-				rm -rf  .git  .gitattributes  .gitignore  .gitmodules
-				cd ..
-				cd vizio_ndk_bsp/ndk/
-				rm -rf .git .gitignore
-				cd ../..
-				tar -czvf $VERSION_RELEASE-ndk-bsp.tar.gz vizio_ndk_bsp
-				'''
-			}
-		}
+		
 		stage('Upload ndk-bsp to artifactory') {
             		steps {
 				//uploading to the tar file to the artifactory
@@ -55,6 +47,7 @@ pipeline {
                        		   }""",
 				   failNoOp: true
               			)
+				sh 'rm -rf ${VERSION_RELEASE}-ndk-bsp.tar.gz'
            		}
 		}
 	}
