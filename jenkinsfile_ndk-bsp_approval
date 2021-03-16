@@ -5,7 +5,7 @@ pipeline {
     		string(name: 'version_release', defaultValue: '', description: 'enter tag?')
   	}
 	
-	environmennt{
+	environment{
 	vizio_tag_modules_download_artifactory_path="{vizio-dallas-megha-test/}"
 	}
 	
